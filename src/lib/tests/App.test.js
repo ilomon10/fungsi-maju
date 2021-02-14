@@ -29,27 +29,27 @@ describe("Engine", () => {
       "nodes": [{
         "id": 1,
         "type": "Basic",
-        "output": [2]
-      },{
+        "outputs": [2]
+      }, {
         "id": 2,
         "type": "Basic",
-        "output": [3, 4]
-      },{
+        "outputs": [3, 4]
+      }, {
         "id": 3,
         "type": "Basic",
-        "output": [1]
-      },{
+        "outputs": []
+      }, {
         "id": 4,
         "type": "Basic",
-        "output": [3, 5]
-      },{
+        "outputs": [3, 5]
+      }, {
         "id": 5,
         "type": "Basic",
-        "output": [3]
+        "outputs": [3]
       }]
     }
 
-    engine.process(json, 1);
+    expect(engine.process(json, 1)).toReturn(true);
   });
 
 });

@@ -1,9 +1,11 @@
+import { ids } from 'webpack';
 import Component from './Component';
 import './css/App.css';
 
 class App {
   version = null;
   components = {};
+  json = null;
 
   constructor(version) {
     this.version = version;
@@ -18,46 +20,38 @@ class App {
     return this;
   }
 
-  process = (json, initNodeId, input = null) => {
-    let { version, nodes } = json;
-    if (version !== this.version) throw new Error("Version incompatible");
+  validate = () => {
+    if (typeof this.json !== "object") return false;
 
-    let node = nodes.find(node => node.id === initNodeId);
+    if (this.json.version !== this.version) return false;
 
-    let path = {};
+    if (!Array.isArray(this.json.nodes)) return false;
+    return true;
+  }
 
-    const run = (node, input) => {
-      if (!node) return true;
-
+  forwardProcess = (node, input) => {
+    node.outputs.forEach((id) => {
       const component = this.components[node.type];
-      if (!component) throw new Error(`Component \`${node.type}\` not registered`);
-
       const output = component.worker(node, input);
 
-      if (!Array.isArray(node.output)) return false;
-      if (node.output.length > 1) {
-      }
+      const nextNode = this.json.nodes.find(node => node.id === id);
 
-      if (!path[node.id])
-        path[node.id] = [];
+      this.forwardProcess(nextNode, output);
+    });
+  }
 
-      node.output.forEach((id) => {
+  process = (json = null, startId, input = null) => {
+    if (json) this.json = Object.assign({}, json);
 
-        if (path[node.id])
-          path[node.id].push(id);
+    if (!this.validate()) return false;
 
-        if (path[node.id].indexOf(id) !== -1) {
-          console.log("path", path);
-          throw new Error("recursive");
-        }
-        
-        run(nodes.find(node => node.id === id), output);
+    const { nodes } = this.json;
 
-      });
-    }
-    run(node, input);
+    let node = nodes.find(node => node.id === startId);
 
-    return this;
+    this.forwardProcess(node, input);
+
+    return true;
   }
 }
 
