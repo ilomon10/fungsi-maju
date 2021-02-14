@@ -14,8 +14,7 @@
 ## 📦 Getting Started
 
 ```
-git clone https://github.com/hodgef/js-library-boilerplate.git myLibrary
-npm install
+npm install fungsi-maju
 ```
 
 ### npm
