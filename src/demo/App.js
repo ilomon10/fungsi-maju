@@ -15,7 +15,7 @@ class App {
   }
 
   run(input, startId) {
-    const proses = this.engine.process(input, startId, {
+    this.engine.process(input, startId, {
       "version": "0.1.0",
       "nodes": this.nodes
     });
