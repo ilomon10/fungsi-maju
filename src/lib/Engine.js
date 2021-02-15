@@ -1,11 +1,11 @@
-import Component from './Component';
 import './css/App.css';
+import Component from './Component';
 import Recursion from './Recursion';
 
 class Engine {
   version = null;
   components = {};
-  data = null;
+  nodes = null;
 
   constructor(version) {
     this.version = version;
@@ -45,21 +45,21 @@ class Engine {
       let nextInput = output;
       if (Array.isArray(output)) nextInput = output[idx];
       return outputNodeIds.reduce((_, nodeId) => {
-        const nextNode = this.data.nodes.find(node => node.id === nodeId);
+        const nextNode = this.nodes.find(node => node.id === nodeId);
         return this.forwardProcess(nextNode, nextInput);
       }, true);
     }, true);
   }
 
   process = (input, startId, json = null) => {
-    if (json) this.data = Object.assign({}, json);
+    if (!json) json = { version: this.version, nodes: this.nodes };
 
-    if (!this.validate(this.data)) return false;
+    if (this.validate(json))
+      this.nodes = [...json.nodes];
+    else
+      return false;
 
-    const { nodes } = this.data;
-
-    let node = nodes.find(node => node.id === startId);
-
+    let node = this.nodes.find(node => node.id === startId);
     this.forwardProcess(node, input);
 
     return true;
