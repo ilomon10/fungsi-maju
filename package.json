@@ -176,5 +176,6 @@
         "@babel/plugin-proposal-class-properties"
       ]
     ]
-  }
+  },
+  "dependencies": {}
 }

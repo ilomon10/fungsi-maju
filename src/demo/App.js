@@ -1,15 +1,24 @@
 import './css/App.css';
 import Lib from './../lib';
+import Inject from './Inject';
+import Switch from './Switch';
+import Debug from './Debug';
 
 class App {
-  constructor(){
-    let libInstance = new Lib();
-    console.log("Demo loaded!", libInstance);
-    this.demoArrowMethod();
+  nodes = null;
+
+  constructor() {
+    this.engine = new Lib.Engine("0.1.0");
+    this.engine.register(new Inject());
+    this.engine.register(new Switch());
+    this.engine.register(new Debug());
   }
 
-  demoArrowMethod = () => {
-    console.log("Arrow methods will work");
+  run(input, startId) {
+    const proses = this.engine.process(input, startId, {
+      "version": "0.1.0",
+      "nodes": this.nodes
+    });
   }
 }
 

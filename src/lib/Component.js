@@ -1,6 +1,9 @@
 class Component {
   name = null;
-  constructor(name) { }
+  engine = null;
+  constructor(name) {
+    this.name = name;
+  }
 }
 
 export default Component;

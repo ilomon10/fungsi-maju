@@ -7,8 +7,8 @@
 
 ## ⭐️ Roadmap
 
-- [ ] Engine untuk proses fungsi
-- [ ] Validator skema json
+- [x] Engine untuk proses fungsi
+- [x] Validator skema json
 - [ ] Editor visual
 
 ## 📦 Getting Started
