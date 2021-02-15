@@ -1,7 +1,7 @@
 /*!
  * 
  *   fungsi-maju v0.0.2
- *   https://github.com/hodgef/js-library-boilerplate
+ *   https://github.com/ilomon10/fungsi-maju
  * 
  *   Copyright (c) Imanuel Pundoko (https://github.com/ilomon10)
  * 
