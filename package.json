@@ -15,14 +15,17 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/hodgef/js-library-boilerplate"
+    "url": "https://github.com/ilomon10/fungsi-maju"
   },
   "author": "Imanuel Pundoko <ilomon10@gmail.com> (https://github.com/ilomon10)",
   "bugs": {
-    "url": "https://github.com/hodgef/js-library-boilerplate/issues"
+    "url": "https://github.com/ilomon10/fungsi-maju/issues"
   },
-  "homepage": "https://github.com/hodgef/js-library-boilerplate",
+  "homepage": "https://github.com/ilomon10/fungsi-maju",
   "keywords": [
+    "programming",
+    "dataflow",
+    "vanilla",
     "library"
   ],
   "license": "MIT",
