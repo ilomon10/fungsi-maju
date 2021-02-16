@@ -12,8 +12,9 @@ describe("Editor", () => {
     }
     builder(node) {
       return node
+        .addOutput(1)
         .addOutput(0)
-        .addOutput(1);
+        ;
     }
     worker(node, input) {
       return input;
@@ -38,7 +39,7 @@ describe("Editor", () => {
     editor.addNode(node);
     editor.addNode(node2);
 
-    node.connect(0, node2.id);
+    editor.connect(node, 0, node2);
 
     const json = editor.toJSON();
 

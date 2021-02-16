@@ -5,25 +5,25 @@ class Node {
     this.outputs = outputs;
   }
 
-  addOutput(branch) {
-    if (!this.outputs[branch]) this.outputs[branch] = [];
-    else this.outputs.push([]);
+  addOutput(branch, id) {
+
+    if (!this.outputs[branch])
+      this.outputs[branch] = [];
+
+    if (id)
+      this.outputs[branch].push(id);
 
     return this;
   }
 
-  removeOutput(id) {
-    this.outputs = this.outputs.filter(output => output !== id);
-    return this;
-  }
+  removeOutput(id, branch = null) {
+    let result = [];
 
-  connect(branch, to) {
-    if (this.outputs[branch])
-      this.outputs[branch].push(to);
-    else {
-      this.addOutput(branch);
-      this.connect(branch, to);
-    }
+    if (branch) result = this.outputs[branch].filter(output => output !== id);
+    else result = this.outputs.map(output => output.filter(out => out !== id));
+
+    this.outputs = result;
+
     return this;
   }
 

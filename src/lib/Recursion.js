@@ -12,7 +12,7 @@ class Recursion {
     this.nodes = nodes;
   }
 
-  extractInputNode = (targetNode) => {
+  extractInputNode(targetNode) {
     return this.nodes.filter(node => {
       if (node.outputs.length < 1) return false;
       return node.outputs
@@ -24,7 +24,7 @@ class Recursion {
     });
   }
 
-  findSelf = (nodes, inputNodes) => {
+  findSelf(nodes, inputNodes) {
     const inters = intersect(nodes, inputNodes);
 
     if (inters.length)
@@ -40,7 +40,7 @@ class Recursion {
     return null;
   }
 
-  detect = () => {
+  detect() {
 
     let nodes = this.nodes;
 

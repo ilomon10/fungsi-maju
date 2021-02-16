@@ -1,7 +1,7 @@
 {
   "name": "fungsi-maju",
   "version": "0.0.4",
-  "description": "Javascript Starter Kit for building libraries",
+  "description": "Library javascript untuk memproses fungsi berantai yang modular dengan format JSON",
   "main": "build/index.js",
   "scripts": {
     "start": "node scripts/start.js",

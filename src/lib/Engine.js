@@ -11,7 +11,7 @@ class Engine {
     this.version = version;
   }
 
-  register = (component) => {
+  register(component) {
     if (!(component instanceof Component)) throw new Error("Not Valid Component");
     if (!component.name) throw new Error(`Property name is \`${component.name}\``);
 
@@ -22,7 +22,7 @@ class Engine {
     return this;
   }
 
-  validate = (data) => {
+  validate(data) {
     if (typeof data !== "object") return false;
     if (data.version !== this.version) throw new Error("Version not compatible");
     if (!Array.isArray(data.nodes)) return false;
@@ -36,7 +36,7 @@ class Engine {
     return true;
   }
 
-  forwardProcess = (node, input) => {
+  forwardProcess(node, input) {
     if (input === undefined) return false;
     const component = this.components[node.type];
     let output = component.worker(node, input);
@@ -51,7 +51,7 @@ class Engine {
     }, true);
   }
 
-  process = (input, startId, json = null) => {
+  process(input, startId, json = null) {
     if (!json) json = { version: this.version, nodes: this.nodes };
 
     if (this.validate(json))

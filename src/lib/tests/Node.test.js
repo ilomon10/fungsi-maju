@@ -2,9 +2,11 @@ import Node from "../Node";
 
 describe("Node", () => {
   let node;
+  let node2;
 
   it("render aman", () => {
     node = new Node(1, "test");
+    node2 = new Node(2, "test");
 
     expect(node).toHaveProperty("id");
     expect(node).toHaveProperty("type");
@@ -16,12 +18,13 @@ describe("Node", () => {
   })
 
   it("add output", () => {
-    node.addOutput(0);
-
-    const node2 = new Node(2, "test");
-
-    node.connect(0, node2.id);
+    node.addOutput(0, node2.id);
 
     expect(node.outputs[0]).toContain(node2.id);
+  })
+  it("remove output", () => {
+    node.removeOutput(node2.id);
+    
+    expect(node.outputs[0]).toEqual([]);
   })
 })
