@@ -1,6 +1,6 @@
 /*!
  * 
- *   fungsi-maju v0.0.4
+ *   fungsi-maju v0.0.5
  *   https://github.com/ilomon10/fungsi-maju
  * 
  *   Copyright (c) Imanuel Pundoko (https://github.com/ilomon10)
@@ -8,5 +8,5 @@
  *   This source code is licensed under the MIT license found in the
  *   LICENSE file in the root directory of this source tree.
  *   
- */body{color:#000}
+ */body{color:#000}.node-editor-container{overflow:hidden;border:1px solid red}.node-editor-background{position:absolute;top:-10000px;right:-10000px;left:-10000px;bottom:-10000px;opacity:.1;background-image:url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAYAAADED76LAAAAJElEQVQoU2NkYGD4z4AKGJG5IA4dFKA5AdVKFAdBVaK4iXIFAEiuCAWq9MdHAAAAAElFTkSuQmCC")}.node-editor-container .connection{overflow:visible;position:absolute;z-index:-1}.node-editor-container .connection .main-path{fill:none;stroke-width:5px;stroke:#00f}.node-wrapper .node{position:relative;background-color:#fff;cursor:-webkit-grab;cursor:grab;border:1px solid transparent}.node-wrapper .node.selected{border:1px solid #00f}.node-wrapper .node .node-content{padding:2px}.node-wrapper .node .node-input,.node-wrapper .node .node-output{display:flex;justify-content:space-between}.node-wrapper .node .node-socket{height:10px;width:10px;background-color:grey;cursor:pointer}
 /*# sourceMappingURL=index.css.map */
