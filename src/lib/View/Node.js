@@ -1,10 +1,8 @@
-import { createElement } from "react";
-import ReactDOM from "react-dom";
-
 import '../css/View.css';
 
 import Drag from "./Drag";
 import Socket from "./Socket";
+import Element from "./Element";
 
 class Node {
 
@@ -15,13 +13,15 @@ class Node {
     this.sockets = {};
 
     this.component = component;
-    this.element = document.createElement("div");
-    this.element.style.position = "absolute";
+    this.container = document.createElement("div");
+    this.container.style.position = "absolute";
 
-    this.element.className = "node-wrapper";
+    this.container.className = "node-wrapper";
+
+    this.element = new Element(this, this.component.name);
 
     this._drag = new Drag(
-      this.element,
+      this.container,
       this.onTranslate.bind(this),
       this.onStart.bind(this),
     );
@@ -30,8 +30,27 @@ class Node {
     this.render();
   }
 
-  onStart(e) {
-    this.view.selectNode(this.node);
+  get id() {
+    return this.node.id;
+  }
+
+  getElement() {
+    return this.element.element;
+  }
+
+  addSocket(type, key, name) {
+    const socket = this.element.addSocket(type, key, name);
+    this.sockets[`${type}-${key}`] = new Socket(socket.element, key, type, this);
+
+    this.update();
+  }
+
+  getSocket(type, key) {
+    return this.sockets[`${type}-${key}`];
+  }
+
+  onStart(_e) {
+    this.view.selectNode(this, _e.ctrlKey);
     this._startPosition = [...this.node.position];
   }
 
@@ -50,32 +69,29 @@ class Node {
   translate(x, y) {
     const node = this.node;
     const params = { node, x, y };
+    const grid = 5;
 
-    node.position[0] = params.x;
-    node.position[1] = params.y;
+    node.position[0] = Math.floor(params.x / grid) * grid;
+    node.position[1] = Math.floor(params.y / grid) * grid;
 
     this.update();
-  }
-
-  bindSocket(element, type, id) {
-    this.sockets[`${type}-${id}`] = new Socket(element, type, this);
   }
 
   update() {
     let [x, y] = [0, 0];
     if (this.node.position) [x, y] = this.node.position;
-    this.element.style.transform = `translate(${x}px, ${y}px)`;
+    this.container.style.transform = `translate(${x}px, ${y}px)`;
     this.node.position = [x, y];
-
     this.view.rerenderNode();
   }
 
   render() {
-    ReactDOM.render(createElement(this.component.element, {
-      node: this.node,
-      view: this.view,
-      bindSocket: this.bindSocket.bind(this)
-    }), this.element);
+    const el = this.element.render(this.view, this.node);
+    this.container.appendChild(el);
+  }
+
+  destroy() {
+
   }
 }
 

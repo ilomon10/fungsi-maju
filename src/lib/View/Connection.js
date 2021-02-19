@@ -1,12 +1,70 @@
+import Picker from "./Picker";
+
 class Connection {
+
+  static defaultPath(points) {
+    const [x1, y1, x2, y2] = points;
+    let dx1 = ((x1 + x2) / 2);
+    dx1 = dx1 - (dx1 - x1);
+    const dy1 = (y1 + y2) / 2;
+    let dx2 = (x1 + x2) / 2;
+    dx2 = dx2 + (dx2 - x1);
+    const dy2 = (y1 + y2) / 2;
+    return `M ${x1} ${y1} C ${dx1} ${dy1} ${dx2} ${dy2} ${x2} ${y2}`;
+  }
+
+  static renderPathData(points) {
+    return Connection.defaultPath(points);
+  }
+
+  static updateConnection(element, data, path = null) {
+    if (!path) path = element.querySelector(".connection path.main-path");
+
+    if (!path) throw new Error("Path of connection was broken");
+
+    path.setAttribute("d", data);
+  }
+
+  static renderConnection(element, data, connection) {
+    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+
+    const classes = !connection ? [] : [
+      `input-${connection.inputId}`,
+      `output-${connection.outputId}`
+    ];
+
+    if (classes.length > 0) svg.classList.add("connection", classes);
+    else svg.classList.add("connection");
+    path.classList.add("main-path");
+
+    path.style.pointerEvents = "all";
+
+    path.setAttribute("d", data);
+
+    svg.appendChild(path);
+    element.appendChild(svg);
+    return path;
+  }
+
   constructor(view, outputSocket, inputSocket) {
     this.view = view;
     this.inputSocket = inputSocket;
     this.outputSocket = outputSocket;
 
+    this.inputSocket.addConnection(this);
+    this.outputSocket.addConnection(this);
+
     this.element = document.createElement("div");
     this.element.style.position = "absolute";
     this.element.style.zIndex = -1;
+    this.element.style.pointerEvents = "none";
+
+    this.keyup = this.keyup.bind(this);
+
+    this._path = null;
+
+    this.view.area.appendChild(this.element);
 
     this.render();
   }
@@ -17,37 +75,48 @@ class Connection {
     return [x1, y1, x2, y2];
   }
 
-  renderPath() {
-    const [x1, y1, x2, y2] = this.getPoints();
-    return `M ${x1} ${y1} L ${x2} ${y2}`;
-  }
-
   update() {
-    const path = this.element.querySelector(".connection path.main-path");
-
-    if (!path) throw new Error("Path of connection was broken");
-
-    const d = this.renderPath();
-    path.setAttribute("d", d);
+    const d = Connection.renderPathData(this.getPoints());
+    Connection.updateConnection(this.element, d, this._path);
   }
 
   render() {
-    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    const d = Connection.renderPathData(this.getPoints());
+    this._path = Connection.renderConnection(
+      this.element, d,
+      {
+        inputId: this.inputSocket.nodeView.node.id,
+        outputId: this.outputSocket.nodeView.node.id
+      }
+    );
 
-    const classes = [
-      `input-${this.inputSocket.nodeView.node.id}`,
-      `output-${this.outputSocket.nodeView.node.id}`
-    ]
+    this._path.removeEventListener("click", this.click.bind(this));
+    this._path.addEventListener("click", this.click.bind(this));
+  }
 
-    svg.classList.add("connection", ...classes);
-    path.classList.add("main-path");
+  click(e) {
+    console.log("click");
+    const classList = this._path.classList;
 
-    svg.appendChild(path);
-    this.element.appendChild(svg);
-    this.view.area.appendChild(this.element);
+    window.removeEventListener("keyup", this.keyup);
+    if (!classList.contains("active")) {
+      window.addEventListener("keyup", this.keyup);
+    }
 
-    this.update();
+    classList.toggle("active");
+  }
+
+  keyup(e) {
+    if (e.code === "Delete" || e.code === "Backspace") {
+      this.destroy();
+    }
+  }
+
+  destroy() {
+    window.removeEventListener("keyup", this.keyup);
+    this.inputSocket.removeConnection(this);
+    this.outputSocket.removeConnection(this);
+    this.view.removeConnection(this);
   }
 }
 

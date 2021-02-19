@@ -1,15 +1,12 @@
-import { Component, Element } from "../lib";
+import { Component } from "../lib";
 
 class Inject extends Component {
   constructor() {
     super("Inject");
-    this.element = Element;
   }
 
   builder(node) {
-    node
-      .addOutput(0)
-      ;
+    node.addSocket("output", 0, "Value");
   }
 
   worker(node, input) {

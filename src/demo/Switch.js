@@ -1,18 +1,16 @@
-import { Component, Element } from "../lib";
+import { Component } from "../lib";
 
 class Switch extends Component {
   constructor() {
     super("Switch");
-    this.element = Element;
   }
 
   builder(node) {
-    node
-      .addOutput(0)
-      .addOutput(1)
-      ;
+    node.addSocket("input", 0, "Value");
+    node.addSocket("output", 0, "Value");
+    node.addSocket("output", 1, "Value");
   }
-  
+
   worker(node, input) {
     return [input < 5 ? input : undefined, input >= 5 ? input : undefined];
   }

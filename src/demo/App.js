@@ -3,30 +3,29 @@ import { Editor, Node } from './../lib';
 import Inject from './Inject';
 import Switch from './Switch';
 import Debug from './Debug';
+import React, { Component, createRef } from 'react';
 
-class App {
+class App extends Component {
   nodes = null;
 
-  constructor() {
-    document.addEventListener("DOMContentLoaded", this.onDOMLoaded.bind(this));
-    this.container = document.getElementById("editor");
+  container = createRef();
 
-    this.container.style.width = "350px";
-    this.container.style.height = "350px";
+  componentDidMount() {
+    console.log(this.container);
+    this.container.current.style.width = "350px";
+    this.container.current.style.height = "350px";
 
-    this.editor = new Editor("0.1.0", this.container);
+    this.editor = new Editor("0.1.0", this.container.current);
     this.editor.register(new Inject());
     this.editor.register(new Switch());
     this.editor.register(new Debug());
-  }
-
-  onDOMLoaded() {
-    document.getElementById("editor");
 
     const nodeI = new Node(Editor.generateId(), "Inject");
     const nodeS = new Node(Editor.generateId(), "Switch");
     const nodeD = new Node(Editor.generateId(), "Debug");
     const nodeD2 = new Node(Editor.generateId(), "Debug");
+
+    console.log(nodeI);
 
     nodeI.position = [10, 0];
     nodeS.position = [60, 50];
@@ -38,15 +37,19 @@ class App {
     this.editor.addNode(nodeD);
     this.editor.addNode(nodeD2);
 
-    this.editor.connect(nodeI, 0, nodeS);
-    this.editor.connect(nodeS, 0, nodeD);
-    this.editor.connect(nodeS, 1, nodeD2);
-    
-    console.log(this.editor);
+    setTimeout(() => {
+      this.editor.connect(nodeI, 0, nodeS);
+      this.editor.connect(nodeS, 1, nodeD);
+    }, 10);
+
+
+    // this.editor.process(input, startId);
   }
 
-  run(input, startId) {
-    this.editor.process(input, startId);
+  render() {
+    return (
+      <div id="editor" ref={this.container}></div>
+    )
   }
 }
 

@@ -1,4 +1,3 @@
-import './css/App.css';
 import Component from './Component';
 import Recursion from './Recursion';
 

@@ -3,31 +3,42 @@ class Drag {
     this.pointerStart = null;
     this.onTranslate = onTranslate;
     this.onStart = onStart;
+    
+    this.down = this.down.bind(this);
+    this.keyDown = this.keyDown.bind(this, hotkey);
+    this.keyUp = this.keyUp.bind(this, hotkey);
+    this.move = this.move.bind(this);
+    this.up = this.up.bind(this);
 
     this.element = element;
-    this.element.addEventListener("pointerdown", this.down.bind(this));
+    this.element.removeEventListener("pointerdown", this.down);
+    this.element.addEventListener("pointerdown", this.down);
 
     this.keypress = null;
 
     if (hotkey) {
       this.keypress = false;
-      window.addEventListener("keydown", this.keyDown.bind(this, hotkey));
-      window.addEventListener("keyup", this.keyUp.bind(this, hotkey));
+      window.removeEventListener("keydown", this.keyDown);
+      window.removeEventListener("keyup", this.keyUp);
+      window.addEventListener("keydown", this.keyDown);
+      window.addEventListener("keyup", this.keyUp);
     }
 
-    window.addEventListener("pointermove", this.move.bind(this));
-    window.addEventListener("pointerup", this.up.bind(this));
+    window.removeEventListener("pointermove", this.move);
+    window.removeEventListener("pointerup", this.up);
+    window.addEventListener("pointermove", this.move);
+    window.addEventListener("pointerup", this.up);
   }
 
   keyDown(hotkey, event) {
-    if (event.key === hotkey) {
+    if (event.code === hotkey || event.key === hotkey) {
       this.element.style.cursor = "grab";
       this.keypress = true;
     }
   }
   keyUp(hotkey, event) {
-    if (event.key === hotkey) {
-      this.element.style.cursor = "initial";
+    if (event.code === hotkey || event.key === hotkey) {
+      this.element.style.cursor = "crosshair";
       this.keypress = false;
     }
   }

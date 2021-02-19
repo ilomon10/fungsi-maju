@@ -3,6 +3,8 @@ import Drag from "./Drag";
 
 class Area {
   constructor(container) {
+    this.mouse = { x: 0, y: 0 };
+
     this.element = document.createElement("div");
     this.container = container;
 
@@ -10,14 +12,18 @@ class Area {
 
     this.background = document.createElement("div");
     this.background.className = "node-editor-background";
+    this.background.style.zIndex = -1;
 
+    this.container.appendChild(this.element);
     this.element.appendChild(this.background);
+
+    this.container.addEventListener('pointermove', this.pointermove.bind(this));
 
     this._drag = new Drag(
       this.container,
       this.onTranslate.bind(this),
       this.onStart.bind(this),
-      "Control"
+      "Space"
     );
 
     this.transform = {
@@ -25,6 +31,15 @@ class Area {
     }
 
     this.update();
+  }
+
+  pointermove(event) {
+    const { clientX, clientY } = event;
+    const rect = this.element.getBoundingClientRect();
+    const x = clientX - rect.left;
+    const y = clientY - rect.top;
+    const { z } = this.transform;
+    this.mouse = { x: x / z, y: y / z };
   }
 
   onStart() {
@@ -47,11 +62,14 @@ class Area {
     this.update();
   }
 
+  contains(element) {
+    return this.element.contains(element);
+  }
   appendChild(element) {
-    this.element.appendChild(element);
+    return this.element.appendChild(element);
   }
   removeChild(element) {
-    this.element.removeChild(element);
+    return this.element.removeChild(element);
   }
 }
 

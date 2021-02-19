@@ -21,15 +21,20 @@
 
 .node-editor-container .connection .main-path {
   fill: none;
-  stroke-width: 5px;
+  stroke-width: 3px;
   stroke: blue;
+}
+.node-editor-container .connection .main-path.active {
+  stroke: red;
 }
 
 .node-wrapper .node {
   position: relative;
   background-color: white;
-  cursor: grab;
+  cursor: move;
   border: 1px solid transparent;
+  min-width: 50px;
+  min-height: 20px;
 }
 
 .node-wrapper .node.selected {
@@ -37,19 +42,57 @@
 }
 
 .node-wrapper .node .node-content {
-  padding: 2px;
+  position: absolute;
+  top: 0;
+  left: 100%;
+  padding-left: 2px;
+  line-height: 20px;
+  pointer-events: none;
 }
 
 .node-wrapper .node .node-input,
 .node-wrapper .node .node-output {
   display: flex;
-  justify-content: space-between;
+  height: 10px;
 }
 
-.node-wrapper .node .node-socket {
+.node-wrapper .node .node-input {
+  margin-bottom: 1px;
+}
+
+.node-wrapper .node div[class^="node-socket"] {
+  position: relative;
   height: 10px;
   width: 10px;
+  margin-right: 1px;
   background-color: gray;
 
   cursor: pointer;
+}
+
+.node-wrapper .node div[class^="node-socket"] > div {
+  position:absolute;
+  opacity: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  pointer-events: none;
+  font-size: 10px;
+  line-height: 20px;
+
+  font-weight: bold;
+}
+
+.node-wrapper .node .node-input div[class^="node-socket"] > div {
+  bottom: 100%;
+}
+.node-wrapper .node .node-output div[class^="node-socket"] > div {
+  top: 100%;
+}
+
+.node-wrapper .node div[class^="node-socket"]:hover {
+  transform: scale(1.5);
+}
+
+.node-wrapper .node div[class^="node-socket"]:hover > div {
+  opacity: 0.75;
 }

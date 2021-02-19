@@ -23,11 +23,12 @@ class Editor extends Engine {
     if (!this.components.hasOwnProperty(node.type))
       throw new Error(`Component ${node.type} not registered`);
 
-    this.components[node.type].builder(node);
+    if (this.view) {
+      const nodeView = this.view.addNode(node);
+      this.components[node.type].builder(nodeView);
+    }
 
     this.nodes.push(node);
-
-    if (this.view) this.view.addNode(node);
 
     return node;
   }

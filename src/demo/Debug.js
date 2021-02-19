@@ -1,12 +1,14 @@
-import { Component, Element } from "../lib";
+import { Component } from "../lib";
 
 class Debug extends Component {
   constructor() {
     super("Debug");
-    this.element = Element;
   }
 
-  builder() { }
+  builder(node) {
+    node.addSocket("input", 0, "Value");
+    console.log(node.sockets);
+  }
 
   worker(node, input) {
     return null;

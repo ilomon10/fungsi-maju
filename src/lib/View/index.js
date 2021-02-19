@@ -2,6 +2,7 @@ import '../css/View.css';
 import Area from './Area';
 import Connection from './Connection';
 import NodeView from './Node';
+import Picker from "./Picker";
 
 class View {
   constructor(container, components) {
@@ -9,15 +10,16 @@ class View {
     this.components = components;
 
     this.container.classList.add("node-editor-container");
-
     this.container.addEventListener("click", this.click.bind(this));
 
-    this.area = new Area(this.container);
-    this.container.appendChild(this.area.element);
+    this.container.style.cursor = "crosshair";
 
     this.connection = {};
     this.selected = {};
     this.nodes = {};
+
+    this.area = new Area(this.container);
+    this.picker = new Picker(this);
   }
 
   addNode(node) {
@@ -28,7 +30,9 @@ class View {
     const nodeView = new NodeView(node, component, this);
 
     this.nodes[node.id] = nodeView;
-    this.area.appendChild(nodeView.element);
+    this.area.appendChild(nodeView.container);
+
+    return nodeView;
   }
 
   selectNode(node, accumulate) {
@@ -45,14 +49,34 @@ class View {
     this.rerenderNode();
   }
 
-  addConnection(from, branch, to) {
+  addConnection(from, fromBranch, to, toBranch = 0) {
     const fromNode = this.nodes[from.id];
     const toNode = this.nodes[to.id];
-    const fromSocket = fromNode.sockets[`output-${branch}`];
-    const toSocket = toNode.sockets[`input-0`];
-
-    this.connection[`${from.id}-${to.id}`] = new Connection(this, fromSocket, toSocket);
+    const fromSocket = fromNode.getSocket("output", fromBranch);
+    const toSocket = toNode.getSocket("input", toBranch);
+    this.connect(fromSocket, toSocket);
   }
+
+  removeConnection(connection) {
+    const connKey = Object.keys(this.connection).filter(key => this.connection[key] === connection);
+    this.area.removeChild(this.connection[connKey].element);
+    delete this.connection[connKey];
+  }
+
+  connect(fromSocket, toSocket) {
+    const from = fromSocket.nodeView;
+    const to = toSocket.nodeView;
+    const id = `${from.id}_${fromSocket.branch}-${to.id}_${toSocket.branch}`;
+    this.connection[id] = new Connection(this, fromSocket, toSocket);
+  }
+
+  getSockets() {
+    const sockets = Object.keys(this.nodes)
+      .map((key) => this.nodes[key].sockets)
+      .map((sockets) => Object.keys(sockets).map(key => sockets[key]))
+      .reduce((acc, sockets) => [...acc, ...sockets], []);
+    return sockets;
+  };
 
   rerenderNode() {
     Object.keys(this.nodes).forEach((key) => {
@@ -66,8 +90,9 @@ class View {
   click(event) {
     let collision = false;
     Object.keys(this.nodes).forEach((key) => {
-      if (this.nodes[key].element.contains(event.target)) collision = true;
+      if (this.nodes[key].getElement().contains(event.target)) collision = true;
     });
+    console.log("collision",collision);
     if (!collision) {
       this.selected = {};
       this.rerenderNode();
