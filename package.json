@@ -1,6 +1,6 @@
 {
   "name": "fungsi-maju",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Library javascript untuk memproses fungsi berantai yang modular dengan format JSON",
   "main": "build/index.js",
   "scripts": {
