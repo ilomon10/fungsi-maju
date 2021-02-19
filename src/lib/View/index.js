@@ -75,6 +75,7 @@ class View {
     const toNode = this.nodes[to.id];
     const fromSocket = fromNode.getSocket("output", fromBranch);
     const toSocket = toNode.getSocket("input", toBranch);
+
     this.connect(fromSocket, toSocket);
   }
 

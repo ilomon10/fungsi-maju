@@ -39,10 +39,8 @@ class App extends Component {
     this.editor.addNode(nodeD);
     this.editor.addNode(nodeD2);
 
-    setTimeout(() => {
-      this.editor.connect(nodeI, 0, nodeS);
-      this.editor.connect(nodeS, 0, nodeD);
-    }, 10);
+    this.editor.connect(nodeI, 0, nodeS);
+    this.editor.connect(nodeS, 0, nodeD);
 
     this.setState({ json: this.editor.toJSON() });
     this.editor.on("noderemoved", (nodes) => {

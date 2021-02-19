@@ -26,6 +26,7 @@ class Editor extends Engine {
       throw new Error(`Component ${node.type} not registered`);
 
     this.nodes.push(node);
+
     this.emit("nodecreated", node, this.components[node.type]);
 
     return node;

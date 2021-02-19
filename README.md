@@ -10,7 +10,7 @@
 
 - [x] Engine untuk proses fungsi
 - [x] Validator skema json
-- [ ] Editor visual
+- [x] Editor visual
 
 ## 📦 Getting Started
 

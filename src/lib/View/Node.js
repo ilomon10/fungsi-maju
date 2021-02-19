@@ -41,12 +41,15 @@ class Node {
   addSocket(type, key, name) {
     const socket = this.element.addSocket(type, key, name);
     this.sockets[`${type}-${key}`] = new Socket(socket.element, key, type, this);
-
+    if (type === "output") this.node.addOutput(key);
     this.update();
+    return socket;
   }
 
   getSocket(type, key) {
-    return this.sockets[`${type}-${key}`];
+    const socket = this.sockets[`${type}-${key}`];
+    if (!socket) throw new Error(`Socket ${type} ${key} at node \`${this.id}\` not found.`);
+    return socket;
   }
 
   onStart(_e) {

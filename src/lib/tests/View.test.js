@@ -2,19 +2,19 @@ import Component from "../Component";
 import Editor from "../Editor";
 import Node from "../Node";
 
-let spy;
-
-beforeAll(() => {
-  spy = jest.spyOn(document, "getElementById");
-})
-
-describe("Editor", () => {
+describe("Editor dengan View", () => {
   let version = "0.1.0";
   let editor;
 
   class BasicComponent extends Component {
     constructor() {
       super("Basic");
+    }
+    builder(nodeView) {
+      nodeView.addSocket("input", 0, "Value");
+      nodeView.addSocket("output", 0, "Value");
+      nodeView.addSocket("output", 1, "Value");
+      return nodeView;
     }
     worker(node, input) {
       return input;
@@ -24,7 +24,9 @@ describe("Editor", () => {
   it("render aman", () => {
     const component = new BasicComponent();
 
-    editor = new Editor(version);
+    const container = document.createElement("div");
+
+    editor = new Editor(version, container);
     editor.register(component);
 
     expect(editor.version).toBe(version);
@@ -48,11 +50,11 @@ describe("Editor", () => {
       nodes: [{
         id: node.id,
         type: "Basic",
-        outputs: [[node2.id]]
+        outputs: [[node2.id], []]
       }, {
         id: node2.id,
         type: "Basic",
-        outputs: []
+        outputs: [[], []]
       }]
     });
 
