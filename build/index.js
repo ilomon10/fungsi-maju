@@ -1,6 +1,6 @@
 /*!
  * 
- *   fungsi-maju v0.0.6
+ *   fungsi-maju v0.0.7
  *   https://github.com/ilomon10/fungsi-maju
  * 
  *   Copyright (c) Imanuel Pundoko (https://github.com/ilomon10)
