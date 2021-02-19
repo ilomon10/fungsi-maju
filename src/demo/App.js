@@ -10,8 +10,12 @@ class App extends Component {
 
   container = createRef();
 
+  state = {
+    json: {}
+  }
+
   componentDidMount() {
-    console.log(this.container);
+
     this.container.current.style.width = "350px";
     this.container.current.style.height = "350px";
 
@@ -25,12 +29,10 @@ class App extends Component {
     const nodeD = new Node(Editor.generateId(), "Debug");
     const nodeD2 = new Node(Editor.generateId(), "Debug");
 
-    console.log(nodeI);
-
     nodeI.position = [10, 0];
-    nodeS.position = [60, 50];
-    nodeD.position = [120, 100];
-    nodeD2.position = [120, 150];
+    nodeS.position = [10, 100];
+    nodeD.position = [10, 200];
+    nodeD2.position = [120, 200];
 
     this.editor.addNode(nodeI);
     this.editor.addNode(nodeS);
@@ -39,16 +41,22 @@ class App extends Component {
 
     setTimeout(() => {
       this.editor.connect(nodeI, 0, nodeS);
-      this.editor.connect(nodeS, 1, nodeD);
+      this.editor.connect(nodeS, 0, nodeD);
     }, 10);
 
-
-    // this.editor.process(input, startId);
+    this.setState({ json: this.editor.toJSON() });
+    this.editor.on("noderemoved", (nodes) => {
+      this.setState({ json: this.editor.toJSON() });
+    })
+    this.editor.process(1, nodeI.id);
   }
 
   render() {
     return (
-      <div id="editor" ref={this.container}></div>
+      <div>
+        <div id="editor" ref={this.container}></div>
+        <div id="json">{JSON.stringify(this.state.json)}</div>
+      </div>
     )
   }
 }

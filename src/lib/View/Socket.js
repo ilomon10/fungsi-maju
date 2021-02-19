@@ -29,7 +29,6 @@ class Socket {
   pointerdown(e) {
     console.log("socket");
     this.nodeView.view.container.dispatchEvent(new PointerEvent("mousemove", e));
-    this.nodeView.view.container.dispatchEvent(new PointerEvent("pointerdown", e));
     this.action(this);
     e.preventDefault();
     e.stopPropagation();
@@ -49,8 +48,17 @@ class Socket {
   addConnection(connection) {
     this.connection.push(connection);
   }
-  removeConnection(connection) {
-    this.connection.splice(this.connection.indexOf(connection), 1);
+  removeConnection(connection = null) {
+    if (connection === null) {
+      return this.connection.map(conn => {
+        this.removeConnection(conn).destroy();
+        return conn;
+      });
+    } else {
+      const index = this.connection.indexOf(connection);
+      const conn = this.connection.splice(index, 1);
+      return conn[0];
+    }
   }
 
   getPosition() {
@@ -64,6 +72,10 @@ class Socket {
       node.position[0] + el.offsetLeft + center.x,
       node.position[1] + el.offsetTop + center.y
     ]
+  }
+
+  destroy() {
+    this.removeConnection();
   }
 }
 

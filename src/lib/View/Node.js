@@ -91,7 +91,17 @@ class Node {
   }
 
   destroy() {
+    Object.keys(this.sockets)
+      .forEach((key) => {
+        const socket = this.sockets[key];
+        console.log(socket);
+        socket.destroy();
+      });
+    this.view.area.removeChild(this.container);
+  }
 
+  toJSON() {
+    return this.node.toJSON();
   }
 }
 

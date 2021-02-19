@@ -36,7 +36,6 @@ class Picker {
   }
 
   pointerup(event) {
-    console.log("pointerup");
     const endEl = document.elementFromPoint(event.clientX, event.clientY);
     if (!this.view.container.contains(endEl)) {
       this.reset();
@@ -46,8 +45,7 @@ class Picker {
     const sockets = this.view.getSockets();
     const socket = sockets.find(socket => socket.element === endEl);
 
-    console.log(this.socket, socket);
-    if (!this.socket) {
+    if (!this.socket || !socket) {
       this.reset();
       return false;
     }

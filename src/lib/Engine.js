@@ -1,12 +1,20 @@
 import Component from './Component';
+import Emitter from './Emitter';
 import Recursion from './Recursion';
 
-class Engine {
+class Engine extends Emitter {
   version = null;
   components = {};
   nodes = null;
 
   constructor(version) {
+    super({
+      process: [],
+      nodecreate: [],
+      nodecreated: [],
+      noderemove: [],
+      noderemoved: [],
+    });
     this.version = version;
   }
 
@@ -61,6 +69,8 @@ class Engine {
     let node = this.nodes.find(node => node.id === startId);
     this.forwardProcess(node, input);
 
+    this.emit("process", node);
+    
     return true;
   }
 }

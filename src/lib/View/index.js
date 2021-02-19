@@ -5,14 +5,21 @@ import NodeView from './Node';
 import Picker from "./Picker";
 
 class View {
-  constructor(container, components) {
+  constructor(container, components, emitter) {
+    this.emitter = emitter;
+
     this.container = container;
     this.components = components;
 
     this.container.classList.add("node-editor-container");
     this.container.addEventListener("click", this.click.bind(this));
-
     this.container.style.cursor = "crosshair";
+
+
+    this.keyup = this.keyup.bind(this);
+
+    window.removeEventListener("keyup", this.keyup);
+    window.addEventListener("keyup", this.keyup);
 
     this.connection = {};
     this.selected = {};
@@ -20,6 +27,11 @@ class View {
 
     this.area = new Area(this.container);
     this.picker = new Picker(this);
+
+    this.emitter.on("nodecreated", (node, component) => {
+      const nodeView = this.addNode(node);
+      component.builder(nodeView);
+    });
   }
 
   addNode(node) {
@@ -47,6 +59,15 @@ class View {
       this.selected[node.id] = node;
 
     this.rerenderNode();
+  }
+
+  removeNode(node) {
+    const key = Object.keys(this.nodes).filter(key => this.nodes[key] === node);
+    const deletedNode = this.nodes[key].node;
+    this.nodes[key].destroy();
+    delete this.nodes[key];
+    this.emitter.removeNode(key);
+    return deletedNode;
   }
 
   addConnection(from, fromBranch, to, toBranch = 0) {
@@ -92,10 +113,19 @@ class View {
     Object.keys(this.nodes).forEach((key) => {
       if (this.nodes[key].getElement().contains(event.target)) collision = true;
     });
-    console.log("collision",collision);
     if (!collision) {
       this.selected = {};
       this.rerenderNode();
+    }
+  }
+
+  keyup(event) {
+    if (event.code === "Backspace" || event.code === "Delete") {
+      console.log("delete", this.selected);
+      Object.keys(this.selected).forEach((key) => {
+        const node = this.selected[key];
+        this.removeNode(node);
+      })
     }
   }
 }

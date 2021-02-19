@@ -14,27 +14,40 @@ class Editor extends Engine {
     super(version);
     this.nodes = [];
 
-    if (container) this.view = new View(container, this.components);
+    if (container) this.view = new View(container, this.components, this);
   }
 
   addNode(node) {
+    this.emit("nodecreate", node);
+
     if (!node instanceof Node) return node;
 
     if (!this.components.hasOwnProperty(node.type))
       throw new Error(`Component ${node.type} not registered`);
 
-    if (this.view) {
-      const nodeView = this.view.addNode(node);
-      this.components[node.type].builder(nodeView);
-    }
-
     this.nodes.push(node);
+    this.emit("nodecreated", node, this.components[node.type]);
 
     return node;
   }
 
   removeNode(id) {
-    return this.nodes.filter(node => node.id !== id);
+    if (Array.isArray(id)) {
+      return id.map((i) => {
+        return this.removeNode(i);
+      })
+    }
+    this.emit("noderemove", this.nodes);
+
+    const index = this.nodes.findIndex(node => node.id === id);
+
+    if (index === -1) throw new Error(`Node ${id} not found`);
+
+    const nodes = this.nodes.splice(index, 1);
+
+    this.emit("noderemoved", nodes);
+
+    return nodes;
   }
 
   connect(from, branch, to) {
