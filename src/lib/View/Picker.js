@@ -104,15 +104,6 @@ class Picker {
     }
   }
 
-  getPoints(socket) {
-    const mouse = this.view.area.mouse;
-    const [x1, y1] = socket.getPosition();
-
-    return socket.type === "output"
-      ? [x1, y1, mouse.x, mouse.y]
-      : [mouse.x, mouse.y, x1, y1];
-  }
-
   updateConnection(socket) {
     const d = Connection.renderPathData(this.getPoints(socket));
     Connection.updateConnection(this.element, d);

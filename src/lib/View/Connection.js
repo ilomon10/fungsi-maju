@@ -1,5 +1,3 @@
-import Picker from "./Picker";
-
 class Connection {
 
   static defaultPath(points) {
