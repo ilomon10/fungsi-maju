@@ -139,31 +139,84 @@ editor.on("process", () => {
 
 ## API
 
-### Engine extends [Emitter](https://github.com/ai/nanoevents)
+### Engine
 
-| property | arguments | return |
+```js
+export { Engine } from "fungsi-maju";
+```
+
+**properties**
+- extends [Emitter](https://github.com/ai/nanoevents)
+- version = `string`
+- components = `[Connection]`
+- nodes = `[Node]`
+
+| method | arguments | return |
 |---|---|---|
 | register(component) | `Component` | `Engine` |
 | validate(data) | `json` | `boolean` |
 | process(input, startId, json) | `value`, `Node.id`, `json?` | `boolean` |
 
-### Editor extends [Engine](#engine)
 
-| property | arguments | return |
+### Editor 
+
+```js
+export { Editor } from "fungsi-maju";
+```
+
+**properties**
+- extends [Engine](#engine)
+- view = [`View`](#view)
+
+| method | arguments | return |
 |---|---|---|
 | static generateId() | - | `string` |
 | addNode(node) | `Node` | `Node` |
 | removeNode(id) | `Node.id` | `boolean` |
 | connect(from, branch, to) | `Node`, `number`, `Node` | `boolean` |
 | toJSON() | - | `json` |
+| fromJSON(json) | `json` | `json` |
+
 
 ### Node
 
-| property | arguments | return |
+```js
+export { Node } from "fungsi-maju";
+```
+
+**properties**
+- id = `string`
+- type = `string`
+- outputs = `[ [Node.id] ]`
+
+| method | arguments | return |
 |---|---|---|
 | addOutput(branch, id) | `number`, `Node.id` | `Node` |
 | removeOutput(id, branch) | `Node.id`, `number?` | `Node` |
 | toJSON() | - | `json` |
+
+
+### View
+
+**properties**
+- emitter = [`Editor`](#editor)
+- area = `Area`
+- picker = `Picker`
+- container = `HTMLElement`
+- connection = `{Connection}`
+- selected = `{NodeView}`
+- nodes = `{NodeView}`
+
+
+### NodeView
+
+**properties**
+- view = [`View`](#view)
+- node = [`Node`](#node)
+- sockets = `{Socket}`
+- component = `{Component}`
+- container = `HTMLElement`
+- element = `Element`
 
 
 ## Credit

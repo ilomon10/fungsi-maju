@@ -22,7 +22,6 @@ class Engine extends Emitter {
     this.version = version;
   }
 
-
   /**
    * Register your custom component
    *

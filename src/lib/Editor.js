@@ -82,7 +82,7 @@ class Editor extends Engine {
 
     const nodes = [...this.nodes];
     nodes.forEach((node) => {
-      this.removeNode(node.id);
+      this.removeNode(node);
     });
 
     data.nodes
