@@ -139,6 +139,16 @@ editor.on("process", () => {
 
 ## API
 
+### Events 
+
+- `process`
+- `nodecreate`
+- `nodecreated`
+- `noderemove`
+- `noderemoved`
+- `connectioncreated`
+- `connectionremoved`
+
 ### Engine
 
 ```js
@@ -151,11 +161,11 @@ export { Engine } from "fungsi-maju";
 - components = `[Connection]`
 - nodes = `[Node]`
 
-| method | arguments | return |
-|---|---|---|
-| register(component) | `Component` | `Engine` |
-| validate(data) | `json` | `boolean` |
-| process(input, startId, json) | `value`, `Node.id`, `json?` | `boolean` |
+| method                        | arguments                   | return              |
+| ----------------------------- | --------------------------- | ------------------- |
+| register(component)           | `Component`                 | [`Engine`](#engine) |
+| validate(data)                | `json`                      | `boolean`           |
+| process(input, startId, json) | `value`, `Node.id`, `json?` | `boolean`           |
 
 
 ### Editor 
@@ -168,14 +178,14 @@ export { Editor } from "fungsi-maju";
 - extends [Engine](#engine)
 - view = [`View`](#view)
 
-| method | arguments | return |
-|---|---|---|
-| static generateId() | - | `string` |
-| addNode(node) | `Node` | `Node` |
-| removeNode(id) | `Node.id` | `boolean` |
-| connect(from, branch, to) | `Node`, `number`, `Node` | `boolean` |
-| toJSON() | - | `json` |
-| fromJSON(json) | `json` | `json` |
+| method                    | arguments                                  | return          |
+| ------------------------- | ------------------------------------------ | --------------- |
+| static generateId()       | -                                          | `string`        |
+| addNode(node)             | [`Node`](#node)                            | [`Node`](#node) |
+| removeNode(node)          | [`Node`](#node)                            | `boolean`       |
+| connect(from, branch, to) | [`Node`](#node), `number`, [`Node`](#node) | `boolean`       |
+| toJSON()                  | -                                          | `json`          |
+| fromJSON(json)            | `json`                                     | `json`          |
 
 
 ### Node
@@ -189,11 +199,11 @@ export { Node } from "fungsi-maju";
 - type = `string`
 - outputs = `[ [Node.id] ]`
 
-| method | arguments | return |
-|---|---|---|
-| addOutput(branch, id) | `number`, `Node.id` | `Node` |
-| removeOutput(id, branch) | `Node.id`, `number?` | `Node` |
-| toJSON() | - | `json` |
+| method                   | arguments                     | return          |
+| ------------------------ | ----------------------------- | --------------- |
+| addOutput(branch, id)    | `number`, [`Node.id`](#node)  | [`Node`](#node) |
+| removeOutput(id, branch) | [`Node.id`](#node), `number?` | [`Node`](#node) |
+| toJSON()                 | -                             | `json`          |
 
 
 ### View
@@ -211,6 +221,7 @@ export { Node } from "fungsi-maju";
 ### NodeView
 
 **properties**
+- id = [`Node.id`](#node)
 - view = [`View`](#view)
 - node = [`Node`](#node)
 - sockets = `{Socket}`
@@ -221,6 +232,6 @@ export { Node } from "fungsi-maju";
 
 ## Credit
 
-Library ini diekstrak dari library [ReteJS](https://github.com/retejs/rete).
-
+Library ini diekstrak dari library [ReteJS](https://github.com/retejs/rete).\
+Emitter yang dipakai yaitu [nanoevents](https://github.com/ai/nanoevents).\
 Template library menggunkan [js-library-boilerplate](https://github.com/hodgef/js-library-boilerplate).
