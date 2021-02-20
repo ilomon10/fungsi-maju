@@ -83,6 +83,10 @@ class View {
   removeConnection(connection) {
     const connKey = Object.keys(this.connection).filter(key => this.connection[key] === connection);
     this.area.removeChild(this.connection[connKey].element);
+    const from = connection.outputSocket.nodeView;
+    const to = connection.inputSocket.nodeView;
+    from.node.removeOutput(to.id);
+
     delete this.connection[connKey];
   }
 

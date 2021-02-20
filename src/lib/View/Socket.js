@@ -47,6 +47,7 @@ class Socket {
   addConnection(connection) {
     this.connection.push(connection);
   }
+
   removeConnection(connection = null) {
     if (connection === null) {
       return this.connection.map(conn => {
