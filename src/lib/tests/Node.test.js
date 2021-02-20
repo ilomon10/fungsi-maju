@@ -22,9 +22,19 @@ describe("Node", () => {
 
     expect(node.outputs[0]).toContain(node2.id);
   })
+
+  it("add exist output", () => {
+    node.addOutput(0, node2.id);
+
+    const isArrayUnique = arr => Array.isArray(arr) && new Set(arr).size === arr.length;
+    
+    expect(node.outputs[0]).toContain(node2.id);
+    expect(isArrayUnique(node.outputs[0])).toBeTruthy();
+  })
+
   it("remove output", () => {
     node.removeOutput(node2.id);
-    
+
     expect(node.outputs[0]).toEqual([]);
   })
 })

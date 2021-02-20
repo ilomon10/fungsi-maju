@@ -2,19 +2,23 @@ import Component from './Component';
 import Emitter from './Emitter';
 import Recursion from './Recursion';
 
+const events = {
+  process: [],
+  nodecreate: [],
+  nodecreated: [],
+  noderemove: [],
+  noderemoved: [],
+  connectioncreated: [],
+  connectionremoved: [],
+};
+
 class Engine extends Emitter {
   version = null;
   components = {};
   nodes = null;
 
   constructor(version) {
-    super({
-      process: [],
-      nodecreate: [],
-      nodecreated: [],
-      noderemove: [],
-      noderemoved: [],
-    });
+    super(events);
     this.version = version;
   }
 

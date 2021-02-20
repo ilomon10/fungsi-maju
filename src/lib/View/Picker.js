@@ -63,8 +63,7 @@ class Picker {
         !this.socket.hasConnection(socket)
         && this.socket.nodeView !== socket.nodeView
       ) {
-        console.log(this.socket.nodeView, socket.nodeView);
-        this.view.connect(this.socket, socket);
+        this.view.connect(socket, this.socket);
       }
       this.reset();
       return true;
@@ -84,8 +83,7 @@ class Picker {
         !this.socket.hasConnection(socket)
         && this.socket.nodeView !== socket.nodeView
       ) {
-        console.log(this.socket.nodeView, socket.nodeView);
-        this.view.connect(socket, this.socket);
+        this.view.connect(this.socket, socket);
       }
       this.reset();
       return true;

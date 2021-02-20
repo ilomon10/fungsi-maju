@@ -29,8 +29,7 @@ class View {
     this.picker = new Picker(this);
 
     this.emitter.on("nodecreated", (node, component) => {
-      const nodeView = this.addNode(node);
-      component.builder(nodeView);
+      this.addNode(node);
     });
   }
 
@@ -43,6 +42,8 @@ class View {
 
     this.nodes[node.id] = nodeView;
     this.area.appendChild(nodeView.container);
+    
+    component.builder(nodeView);
 
     return nodeView;
   }
@@ -89,7 +90,8 @@ class View {
     const from = fromSocket.nodeView;
     const to = toSocket.nodeView;
     const id = `${from.id}_${fromSocket.branch}-${to.id}_${toSocket.branch}`;
-    this.connection[id] = new Connection(this, fromSocket, toSocket);
+    from.node.addOutput(fromSocket.branch, to.id);
+    this.connection[id] = new Connection(this, fromSocket, toSocket, this.emitter);
   }
 
   getSockets() {

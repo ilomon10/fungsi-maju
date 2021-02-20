@@ -42,11 +42,16 @@ class App extends Component {
     this.editor.connect(nodeI, 0, nodeS);
     this.editor.connect(nodeS, 0, nodeD);
 
-    this.setState({ json: this.editor.toJSON() });
-    this.editor.on("noderemoved", (nodes) => {
+    const updateJSON = () => {
+      console.log("update");
       this.setState({ json: this.editor.toJSON() });
-    })
+    }
+    this.editor.on("process", updateJSON);
+    this.editor.on("noderemoved", updateJSON);
+    this.editor.on("connectioncreated", updateJSON);
     this.editor.process(1, nodeI.id);
+    
+    updateJSON();
   }
 
   render() {

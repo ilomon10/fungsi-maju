@@ -57,6 +57,43 @@ describe("Editor", () => {
     });
 
     editor.process(0, node.id);
+  });
+
+  it("import dari json", () => {
+    const node = [
+      Editor.generateId(),
+      Editor.generateId()
+    ];
+    const json = {
+      version: "0.1.0",
+      nodes: [{
+        id: node[0],
+        type: "Basic",
+        outputs: [[node[1]]]
+      }, {
+        id: node[1],
+        type: "Basic",
+        outputs: []
+      }]
+    };
+
+    editor.fromJSON(json);
+
+    expect(editor.nodes.length).toBe(2);
+    expect(editor.nodes).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          id: node[0],
+          type: "Basic",
+          outputs: [[node[1]]]
+        }),
+        expect.objectContaining({
+          id: node[1],
+          type: "Basic",
+          outputs: []
+        })
+      ]));
+
   })
 
 })

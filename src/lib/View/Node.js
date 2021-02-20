@@ -93,18 +93,18 @@ class Node {
     this.container.appendChild(el);
   }
 
+  toJSON() {
+    return this.node.toJSON();
+  }
+  
   destroy() {
-    Object.keys(this.sockets)
+    const sockets = this.sockets;
+    Object.keys(sockets)
       .forEach((key) => {
         const socket = this.sockets[key];
-        console.log(socket);
         socket.destroy();
       });
     this.view.area.removeChild(this.container);
-  }
-
-  toJSON() {
-    return this.node.toJSON();
   }
 }
 

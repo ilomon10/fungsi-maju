@@ -10,8 +10,11 @@ class Node {
     if (!this.outputs[branch])
       this.outputs[branch] = [];
 
-    if (id)
+    if (id
+      && this.outputs[branch].indexOf(id) === -1
+    ) {
       this.outputs[branch].push(id);
+    }
 
     return this;
   }

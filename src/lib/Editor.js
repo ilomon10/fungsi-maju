@@ -38,6 +38,7 @@ class Editor extends Engine {
         return this.removeNode(i);
       })
     }
+
     this.emit("noderemove", this.nodes);
 
     const index = this.nodes.findIndex(node => node.id === id);
@@ -48,7 +49,11 @@ class Editor extends Engine {
 
     this.emit("noderemoved", nodes);
 
-    return nodes;
+    return nodes[0];
+  }
+
+  getNode(id) {
+    return this.nodes.find((node) => node.id === id);
   }
 
   connect(from, branch, to) {
@@ -58,9 +63,11 @@ class Editor extends Engine {
     const toNode = this.nodes.find(node => node.id === to.id);
     if (!toNode) throw new Error(`Node ${to.id} not found`);
 
-    if (this.view) this.view.addConnection(fromNode, branch, toNode);
-
     fromNode.addOutput(branch, toNode.id);
+    
+    console.log(fromNode);
+
+    if (this.view) this.view.addConnection(fromNode, branch, toNode);
 
     return this;
   }
@@ -71,6 +78,29 @@ class Editor extends Engine {
       nodes: this.nodes.map((node) => node.toJSON())
     };
     return data;
+  }
+
+  fromJSON(data) {
+    if (!this.validate(data)) return false;
+
+    const nodes = [...this.nodes];
+    nodes.forEach((node) => {
+      this.removeNode(node.id);
+    });
+
+    data.nodes
+      .map((node) => {
+        return this.addNode(new Node(node.id, node.type, node.outputs));
+      }).forEach((node) => {
+        node.outputs.forEach((output, branch) => {
+          output.forEach((nodeId) => {
+            const toNode = this.getNode(nodeId);
+            this.connect(node, branch, toNode);
+          })
+        })
+      });
+
+    return true;
   }
 }
 

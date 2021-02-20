@@ -45,10 +45,11 @@ class Connection {
     return path;
   }
 
-  constructor(view, outputSocket, inputSocket) {
+  constructor(view, outputSocket, inputSocket, emitter) {
     this.view = view;
     this.inputSocket = inputSocket;
     this.outputSocket = outputSocket;
+    this.emitter = emitter;
 
     this.inputSocket.addConnection(this);
     this.outputSocket.addConnection(this);
@@ -65,6 +66,7 @@ class Connection {
     this.view.area.appendChild(this.element);
 
     this.render();
+    this.emitter.emit("connectioncreated", this);
   }
 
   getPoints() {
@@ -93,7 +95,6 @@ class Connection {
   }
 
   click(e) {
-    console.log("click");
     const classList = this._path.classList;
 
     window.removeEventListener("keyup", this.keyup);
@@ -115,6 +116,7 @@ class Connection {
     this.inputSocket.removeConnection(this);
     this.outputSocket.removeConnection(this);
     this.view.removeConnection(this);
+    this.emitter.emit("connectionremoved", this);
   }
 }
 
