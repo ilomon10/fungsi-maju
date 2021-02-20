@@ -59,7 +59,11 @@ class Picker {
     }
 
     if (this.socket.type === "input") {
-      if (!this.socket.hasConnection(socket)) {
+      if (
+        !this.socket.hasConnection(socket)
+        && this.socket.nodeView !== socket.nodeView
+      ) {
+        console.log(this.socket.nodeView, socket.nodeView);
         this.view.connect(this.socket, socket);
       }
       this.reset();
@@ -76,7 +80,11 @@ class Picker {
     }
 
     if (this.socket.type === "output") {
-      if (!this.socket.hasConnection(socket)) {
+      if (
+        !this.socket.hasConnection(socket)
+        && this.socket.nodeView !== socket.nodeView
+      ) {
+        console.log(this.socket.nodeView, socket.nodeView);
         this.view.connect(socket, this.socket);
       }
       this.reset();

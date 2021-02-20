@@ -32,7 +32,7 @@ class Connection {
       `output-${connection.outputId}`
     ];
 
-    if (classes.length > 0) svg.classList.add("connection", classes);
+    if (classes.length > 0) svg.classList.add("connection", ...classes);
     else svg.classList.add("connection");
     path.classList.add("main-path");
 

@@ -27,7 +27,6 @@ class Socket {
   }
 
   pointerdown(e) {
-    console.log("socket");
     this.nodeView.view.container.dispatchEvent(new PointerEvent("mousemove", e));
     this.action(this);
     e.preventDefault();

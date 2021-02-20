@@ -106,6 +106,10 @@ class MyComponent extends Component{
   constructor(name) {
     super(name);
   }
+  worker(node, input) {
+    const output = input + 1;
+    return output;
+  }
 }
 
 let editor = new Editor("0.1.0");

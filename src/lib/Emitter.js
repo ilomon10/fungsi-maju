@@ -1,5 +1,6 @@
 /* 
- * License URL: https://github.com/ai/nanoevents/blob/main/LICENSE
+ * Repo URL    : https://github.com/ai/nanoevents
+ * License URL : https://github.com/ai/nanoevents/blob/main/LICENSE
  * 
  * The MIT License (MIT)
  * 
@@ -27,14 +28,42 @@ class Emitter {
   constructor(events) {
     this.events = events;
   }
-  emit(event, ...args) {
-    ; (this.events[event] || []).forEach(i => i(...args))
-  }
 
+  /**
+   * Add a listener for a given event.
+   *
+   * ```js
+   * const unbind = ee.on('tick', (tickType, tickDuration) => {
+   *   count += 1
+   * })
+   *
+   * disable () {
+   *   unbind()
+   * }
+   * ```
+   *
+   * @param event The event name.
+   * @param cb The listener function.
+   * @returns Unbind listener from event.
+   */
   on(event, cb) {
     ; (this.events[event] = this.events[event] || []).push(cb)
     return () =>
       (this.events[event] = (this.events[event] || []).filter(i => i !== cb))
+  }
+
+  /**
+   * Calls each of the listeners registered for a given event.
+   *
+   * ```js
+   * ee.emit('tick', tickType, tickDuration)
+   * ```
+   *
+   * @param event The event name.
+   * @param args The arguments for listeners.
+   */
+  emit(event, ...args) {
+    ; (this.events[event] || []).forEach(i => i(...args))
   }
 }
 

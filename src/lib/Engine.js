@@ -18,6 +18,16 @@ class Engine extends Emitter {
     this.version = version;
   }
 
+
+  /**
+   * Register your custom component
+   *
+   * ```js
+   * e.register(new MyComponent());
+   * ```
+   *
+   * @param component The event name.
+   */
   register(component) {
     if (!(component instanceof Component)) throw new Error("Not Valid Component");
     if (!component.name) throw new Error(`Property name is \`${component.name}\``);
@@ -58,19 +68,29 @@ class Engine extends Emitter {
     }, true);
   }
 
+  /**
+   * Process data based on json
+   *
+   * ```js
+   * e.process(input, startId, json = null);
+   * ```
+   *
+   * @param input Input value.
+   * @param startId Node id.
+   * @param json Flow process.
+   */
   process(input, startId, json = null) {
     if (!json) json = { version: this.version, nodes: this.nodes };
 
     if (this.validate(json))
       this.nodes = [...json.nodes];
-    else
-      return false;
+    else return false;
 
     let node = this.nodes.find(node => node.id === startId);
     this.forwardProcess(node, input);
 
     this.emit("process", node);
-    
+
     return true;
   }
 }
