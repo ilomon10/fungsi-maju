@@ -7,10 +7,10 @@ class Debug extends Component {
 
   builder(node) {
     node.addSocket("input", 0, "Value");
-    console.log(node.sockets);
   }
 
   worker(node, input) {
+    console.log(node.id, input);
     return null;
   }
 }

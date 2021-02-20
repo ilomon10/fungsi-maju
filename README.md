@@ -14,8 +14,10 @@
 
 ## 📦 Getting Started
 
-```
-npm install fungsi-maju
+> NOTE: LIBRARY INI MASIH BERSIFAT EKPERIMEN
+
+```bash
+$ npm install fungsi-maju
 ```
 
 ### npm

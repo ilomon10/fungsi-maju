@@ -15,7 +15,6 @@ class View {
     this.container.addEventListener("click", this.click.bind(this));
     this.container.style.cursor = "crosshair";
 
-
     this.keyup = this.keyup.bind(this);
 
     window.removeEventListener("keyup", this.keyup);
@@ -28,8 +27,11 @@ class View {
     this.area = new Area(this.container);
     this.picker = new Picker(this);
 
-    this.emitter.on("nodecreated", (node, component) => {
+    this.emitter.on("nodecreated", (node) => {
       this.addNode(node);
+    });
+    this.emitter.on("noderemove", (node) => {
+      this.removeNode(this.nodes[node.id]);
     });
   }
 
@@ -42,7 +44,7 @@ class View {
 
     this.nodes[node.id] = nodeView;
     this.area.appendChild(nodeView.container);
-    
+
     component.builder(nodeView);
 
     return nodeView;
@@ -63,11 +65,10 @@ class View {
   }
 
   removeNode(node) {
-    const key = Object.keys(this.nodes).filter(key => this.nodes[key] === node);
-    const deletedNode = this.nodes[key].node;
-    this.nodes[key].destroy();
-    delete this.nodes[key];
-    this.emitter.removeNode(key);
+    const id = node.id;
+    const deletedNode = this.nodes[id].node;
+    this.nodes[id].destroy();
+    delete this.nodes[id];
     return deletedNode;
   }
 
@@ -128,10 +129,9 @@ class View {
 
   keyup(event) {
     if (event.code === "Backspace" || event.code === "Delete") {
-      console.log("delete", this.selected);
       Object.keys(this.selected).forEach((key) => {
         const node = this.selected[key];
-        this.removeNode(node);
+        this.emitter.removeNode(node.node);
       })
     }
   }

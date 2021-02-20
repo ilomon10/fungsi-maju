@@ -32,18 +32,17 @@ class Editor extends Engine {
     return node;
   }
 
-  removeNode(id) {
-    if (Array.isArray(id)) {
-      return id.map((i) => {
-        return this.removeNode(i);
+  removeNode(node) {
+    if (Array.isArray(node)) {
+      return node.map((n) => {
+        return this.removeNode(n);
       })
     }
+    
+    this.emit("noderemove", node);
 
-    this.emit("noderemove", this.nodes);
-
-    const index = this.nodes.findIndex(node => node.id === id);
-
-    if (index === -1) throw new Error(`Node ${id} not found`);
+    const index = this.nodes.findIndex(n => n.id === node.id);
+    if (index === -1) throw new Error(`Node ${node.id} not found`);
 
     const nodes = this.nodes.splice(index, 1);
 
@@ -64,8 +63,6 @@ class Editor extends Engine {
     if (!toNode) throw new Error(`Node ${to.id} not found`);
 
     fromNode.addOutput(branch, toNode.id);
-    
-    console.log(fromNode);
 
     if (this.view) this.view.addConnection(fromNode, branch, toNode);
 
