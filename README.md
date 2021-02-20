@@ -139,6 +139,24 @@ editor.on("process", () => {
 
 ## API
 
+### Schema
+
+```json
+{
+  "version": "1.0.0",
+  "nodes": [
+    {
+      "id": "string",
+      "type": "string",
+      "outputs": [
+        [ "string" ]
+      ]
+    },
+    ...
+  ]
+}
+```
+
 ### Events 
 
 - `process`
@@ -232,6 +250,8 @@ export { Node } from "fungsi-maju";
 
 ## Credit
 
+Konsep prosesnya mirip [Node Red](https://github.com/node-red/node-red).\
+Editor visual adopsi dari [vvvv](https://vvvv.org/).\
 Library ini diekstrak dari library [ReteJS](https://github.com/retejs/rete).\
 Emitter yang dipakai yaitu [nanoevents](https://github.com/ai/nanoevents).\
 Template library menggunkan [js-library-boilerplate](https://github.com/hodgef/js-library-boilerplate).
