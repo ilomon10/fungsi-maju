@@ -1,7 +1,7 @@
 import '../css/View.css';
-import Area from './Area';
-import Connection from './Connection';
-import NodeView from './Node';
+import Area from "./Area";
+import Connection from "./Connection";
+import NodeView from "./Node";
 import Picker from "./Picker";
 
 class View {
@@ -111,6 +111,10 @@ class View {
     Object.keys(this.nodes).forEach((key) => {
       this.nodes[key].render();
     });
+    this.updateConnection();
+  }
+
+  updateConnection() {
     Object.keys(this.connection).forEach((key) => {
       this.connection[key].update();
     })

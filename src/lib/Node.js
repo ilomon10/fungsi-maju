@@ -1,8 +1,13 @@
 class Node {
-  constructor(id, type, outputs = []) {
+  position = {
+    x: 0,
+    y: 0
+  }
+  constructor(id, type, outputs = [], options = {}) {
     this.id = id;
     this.type = type;
     this.outputs = outputs;
+    this.position = options.position;
   }
 
   addOutput(branch, id) {
@@ -30,8 +35,15 @@ class Node {
     return this;
   }
 
-  toJSON() {
-    const data = { id: this.id, type: this.type, outputs: this.outputs };
+  toJSON(complete = false) {
+    let data = {
+      id: this.id,
+      type: this.type,
+      outputs: [...this.outputs.map(output => [...output])]
+    };
+
+    if (complete) data.position = { ...this.position };
+
     return data;
   }
 }

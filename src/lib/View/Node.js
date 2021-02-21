@@ -43,6 +43,7 @@ class Node {
     this.sockets[`${type}-${key}`] = new Socket(socket.element, key, type, this);
     if (type === "output") this.node.addOutput(key);
     this.update();
+    this.view.rerenderNode();
     return socket;
   }
 
@@ -61,6 +62,8 @@ class Node {
     const x = this._startPosition[0] + dx;
     const y = this._startPosition[1] + dy;
     this.translate(x, y);
+
+    this.view.emitter.emit("nodetranslated", this.node);
   }
 
   onDrag(dx, dy) {
@@ -85,7 +88,7 @@ class Node {
     if (this.node.position) [x, y] = this.node.position;
     this.container.style.transform = `translate(${x}px, ${y}px)`;
     this.node.position = [x, y];
-    this.view.rerenderNode();
+    this.view.updateConnection();
   }
 
   render() {
@@ -94,9 +97,9 @@ class Node {
   }
 
   toJSON() {
-    return this.node.toJSON();
+    return this.node.toJSON(true);
   }
-  
+
   destroy() {
     const sockets = this.sockets;
     Object.keys(sockets)

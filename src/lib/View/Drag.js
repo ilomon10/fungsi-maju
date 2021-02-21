@@ -1,9 +1,10 @@
 class Drag {
-  constructor(element, onTranslate, onStart, hotkey = null) {
+  constructor(element, onTranslate, onStart, onStop = () => { }, hotkey = null) {
     this.pointerStart = null;
     this.onTranslate = onTranslate;
     this.onStart = onStart;
-    
+    this.onStop = onStop;
+
     this.down = this.down.bind(this);
     this.keyDown = this.keyDown.bind(this, hotkey);
     this.keyUp = this.keyUp.bind(this, hotkey);
@@ -64,9 +65,10 @@ class Drag {
     this.onTranslate(delta[0] / zoom, delta[1] / zoom, event);
   }
 
-  up(event) {
+  up() {
     if (!this.pointerStart) return;
     this.pointerStart = null;
+    this.onStop();
   }
 }
 

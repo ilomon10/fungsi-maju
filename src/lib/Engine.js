@@ -8,6 +8,7 @@ const events = {
   nodecreated: [],
   noderemove: [],
   noderemoved: [],
+  nodetranslated: [],
   connectioncreated: [],
   connectionremoved: [],
 };

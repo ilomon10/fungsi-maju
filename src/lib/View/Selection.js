@@ -3,30 +3,43 @@ import Drag from "./Drag";
 class Selection {
   constructor(view) {
     this.view = view;
-    console.log(this);
-    this._drag = new Drag(this.view.container, this.onTranslate.bind(this), this.onStart.bind(this))
+
+    this._drag = new Drag(
+      this.view.container,
+      this.onTranslate.bind(this),
+      this.onStart.bind(this),
+      this.onStop.bind(this)
+    )
+
+    this._startPosition = null;
 
     this.element = document.createElement("div");
-    
+
     this.element.style.position = "absolute";
     this.element.style.zIndex = 2;
     this.element.style.pointerEvents = "none";
 
-    this.view.container.appendChild(this.element);
+    this.view.area.appendChild(this.element);
 
     this.render();
   }
 
   onStart(e) {
-    this._startPosition = [e.pageX, e.pageY];
-    console.log("start");
+    this.view.container.dispatchEvent(new PointerEvent("mousemove", e));
+    const { x, y } = this.view.area.mouse;
+    this._startPosition = [x, y];
   }
 
   onTranslate(dx, dy) {
-    const x = this._startPosition[0] + dx;
-    const y = this._startPosition[1] + dy;
-    console.log("translate", x, y);
-    this.update(x, y);
+    let x1 = this._startPosition[0] + dx;
+    let y1 = this._startPosition[1] + dy;
+    this.update(x1, y1);
+  }
+
+  onStop(e) {
+    this._startPosition = null;
+    this.update(0, 0);
+    console.log(this.view.nodes);
   }
 
   renderPath(x2, y2) {
@@ -36,9 +49,13 @@ class Selection {
   }
 
   update(x, y) {
+    let d = "";
+    if (this._startPosition !== null) d = this.renderPath(x, y);
     const rect = this.element.querySelector("svg path.node-selection-rect");
-    rect.setAttribute("fill", "red");
-    rect.setAttribute("d", this.renderPath(x, y));
+    rect.setAttribute("fill", "rgb(255 255 255 / 50%)");
+    rect.setAttribute("stroke", "blue");
+    rect.setAttribute("strokeWidth", 2);
+    rect.setAttribute("d", d);
   };
 
   render() {

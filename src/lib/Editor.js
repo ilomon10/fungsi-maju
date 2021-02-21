@@ -69,10 +69,10 @@ class Editor extends Engine {
     return this;
   }
 
-  toJSON() {
+  toJSON(complete = false) {
     const data = {
       version: this.version,
-      nodes: this.nodes.map((node) => node.toJSON())
+      nodes: this.nodes.map((node) => node.toJSON(complete))
     };
     return data;
   }

@@ -23,6 +23,7 @@ class Area {
       this.container,
       this.onTranslate.bind(this),
       this.onStart.bind(this),
+      () => { },
       "Space"
     );
 
@@ -42,7 +43,8 @@ class Area {
     this.mouse = { x: x / z, y: y / z };
   }
 
-  onStart() {
+  onStart(e) {
+    e.stopPropagation();
     this._startPosition = { ...this.transform };
   }
 
