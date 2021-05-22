@@ -6,22 +6,16 @@ on:
       - master
 
 jobs:
-  test:
+  publish:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
       - uses: actions/setup-node@v1
         with:
           node-version: 12
-      - name: Test
-        run: |
-          npm install
-          npm run test -- --coverage --watchAll=false
-  bump-version:
-    needs: test
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v1
+      - run: npm install
+      - run: npm run test -- --coverage --watchAll=false
+        
       - name: Setup GIT
         run: |
           git config --local --list
@@ -30,6 +24,7 @@ jobs:
           git config user.name "Imanuel Pundoko"
         env:
             GH_EMAIL: ${{secrets.GH_EMAIL}}
+          
       - name: Bump version
         run: |
           git reset --hard
@@ -40,10 +35,7 @@ jobs:
           git push "https://$GITHUB_ACTOR:$GITHUB_TOKEN@github.com/$GITHUB_REPOSITORY"
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-  publish:
-    needs: bump-version
-    runs-on: ubuntu-latest
-    steps:
+          
       - name: npm publish
         run: |
           npm config set //registry.npmjs.org/:_authToken=$NODE_AUTH_TOKEN
