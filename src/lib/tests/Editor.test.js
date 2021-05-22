@@ -47,10 +47,12 @@ describe("Editor", () => {
       version: version,
       nodes: [{
         id: node.id,
+        metadata: {},
         type: "Basic",
         outputs: [[node2.id]]
       }, {
         id: node2.id,
+        metadata: {},
         type: "Basic",
         outputs: []
       }]
@@ -68,10 +70,12 @@ describe("Editor", () => {
       version: "0.1.0",
       nodes: [{
         id: node[0],
+        metadata: {},
         type: "Basic",
         outputs: [[node[1]]]
       }, {
         id: node[1],
+        metadata: { "key": "value" },
         type: "Basic",
         outputs: []
       }]
