@@ -32,7 +32,7 @@ jobs:
           npm run build
           git add . || true
           git commit -m "Build update" || true
-          git push "https://$GITHUB_ACTOR:$GITHUB_TOKEN@github.com/$GITHUB_REPOSITORY" --force
+          git push "https://$GITHUB_ACTOR:$GITHUB_TOKEN@github.com/$GITHUB_REPOSITORY"
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
           
