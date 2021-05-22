@@ -25,22 +25,27 @@ class App extends Component {
     this.editor.register(new Debug());
 
     const nodeI = new Node(Editor.generateId(), "Inject");
+    const nodeI2 = new Node(Editor.generateId(), "Inject");
     const nodeS = new Node(Editor.generateId(), "Switch");
     const nodeD = new Node(Editor.generateId(), "Debug");
     const nodeD2 = new Node(Editor.generateId(), "Debug");
 
     nodeI.position = [10, 0];
+    nodeI2.position = [100, 0];
     nodeS.position = [10, 100];
     nodeD.position = [10, 200];
     nodeD2.position = [120, 200];
 
     this.editor.addNode(nodeI);
+    this.editor.addNode(nodeI2);
     this.editor.addNode(nodeS);
     this.editor.addNode(nodeD);
     this.editor.addNode(nodeD2);
 
     this.editor.connect(nodeI, 0, nodeS);
+    this.editor.connect(nodeI2, 0, nodeS);
     this.editor.connect(nodeS, 0, nodeD);
+    this.editor.connect(nodeS, 1, nodeD2);
 
     const updateJSON = () => {
       this.setState({ json: this.editor.toJSON(true) });
@@ -50,8 +55,17 @@ class App extends Component {
     this.editor.on("connectioncreated", updateJSON);
     this.editor.on("connectionremoved", updateJSON);
     this.editor.on("nodetranslated", updateJSON);
-    this.editor.process(1, nodeI.id);
-    
+    let i = 0;
+    let togg = false;
+    setInterval(() => {
+      if (togg)
+        this.editor.process(i, nodeI.id);
+      else
+        this.editor.process(i, nodeI2.id);
+      togg = !togg;
+      i++;
+    }, 2000);
+
     updateJSON();
   }
 

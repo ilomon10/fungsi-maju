@@ -49,10 +49,12 @@ describe("Editor dengan View", () => {
       version: version,
       nodes: [{
         id: node.id,
+        metadata: {},
         type: "Basic",
         outputs: [[node2.id], []]
       }, {
         id: node2.id,
+        metadata: {},
         type: "Basic",
         outputs: [[], []]
       }]

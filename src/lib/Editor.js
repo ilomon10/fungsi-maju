@@ -38,7 +38,7 @@ class Editor extends Engine {
         return this.removeNode(n);
       })
     }
-    
+
     this.emit("noderemove", node);
 
     const index = this.nodes.findIndex(n => n.id === node.id);
@@ -87,7 +87,10 @@ class Editor extends Engine {
 
     data.nodes
       .map((node) => {
-        return this.addNode(new Node(node.id, node.type, node.outputs));
+        return this.addNode(new Node(node.id, node.type, node.outputs, {
+          position: node.position,
+          metadata: node.metadata
+        }));
       }).forEach((node) => {
         node.outputs.forEach((output, branch) => {
           output.forEach((nodeId) => {

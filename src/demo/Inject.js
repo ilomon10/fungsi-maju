@@ -10,7 +10,7 @@ class Inject extends Component {
   }
 
   worker(node, input) {
-    return input;
+    return { from: node.id, value: input };
   }
 }
 
