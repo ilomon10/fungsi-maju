@@ -148,6 +148,7 @@ editor.on("process", () => {
     {
       "id": "string",
       "type": "string",
+      "metadata": {},
       "outputs": [
         [ "string" ]
       ]
@@ -214,6 +215,8 @@ export { Node } from "fungsi-maju";
 
 **properties**
 - id = `string`
+- metadata = `Map`
+- position = `object`
 - type = `string`
 - outputs = `[ [Node.id] ]`
 
