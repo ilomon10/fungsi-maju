@@ -8,8 +8,6 @@ describe("Node", () => {
     node = new Node(1, "test");
     node2 = new Node(2, "test");
 
-    node.metadata.set("key", "value");
-
     expect(node).toHaveProperty("id");
     expect(node).toHaveProperty("type");
     expect(node).toHaveProperty("outputs");
@@ -19,11 +17,25 @@ describe("Node", () => {
     expect(node.outputs).toEqual([]);
   })
 
+  it("set metadata", () => {
+    node.metadata.set("key", "value");
+    const json = node.metadata.toJSON();
+    expect(json).toEqual({ "key": "value" });
+    expect(node.metadata.get("key")).toEqual("value");
+  })
+
+  it("remove metadata", () => {
+    node.metadata.delete("key");
+    const json = node.metadata.toJSON();
+    expect(json).toEqual({});
+    expect(node.metadata.get("key")).toEqual(undefined);
+  })
+
   it("export to json", () => {
     const json = node.toJSON();
     expect(json).toEqual({
       "id": 1,
-      "metadata": { "key": "value" },
+      "metadata": {},
       "outputs": [],
       "type": "test"
     });
