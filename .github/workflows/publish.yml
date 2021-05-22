@@ -6,21 +6,22 @@ on:
       - master
 
 jobs:
-  build: 
+  test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
       - uses: actions/setup-node@v1
         with:
           node-version: 12
-      - name: Setup GIT
+      - name: Test
         run: |
           npm install
           npm run test -- --coverage --watchAll=false
-  setup-git:
-    needs: build
+  bump-version:
+    needs: test
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v1
       - name: Setup GIT
         run: |
           git config --local --list
@@ -28,11 +29,7 @@ jobs:
           git config user.email "$GH_EMAIL"
           git config user.name "Imanuel Pundoko"
         env:
-            GH_EMAIL: ${{secrets.GH_EMAIL}} 
-  bump-version:
-    needs: setup-git
-    runs-on: ubuntu-latest
-    steps:
+            GH_EMAIL: ${{secrets.GH_EMAIL}}
       - name: Bump version
         run: |
           git reset --hard
