@@ -256,6 +256,12 @@ export { Node } from "fungsi-maju";
 - container = `HTMLElement`
 - element = `Element`
 
+| method   | arguments | return |
+| -------- | --------- | ------ |
+| update() | -         | -      |
+| render() | -         | -      |
+| toJSON() | -         | `json` |
+
 
 ## Credit
 
