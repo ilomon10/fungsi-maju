@@ -1,4 +1,4 @@
-import '../css/View.css';
+// import '../css/View.css';
 import Drag from "./Drag";
 
 class Area {

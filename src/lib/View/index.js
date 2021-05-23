@@ -1,4 +1,4 @@
-import '../css/View.css';
+// import '../css/View.css';
 import Area from "./Area";
 import Connection from "./Connection";
 import NodeView from "./Node";
@@ -10,7 +10,7 @@ class View {
 
     this.container = container;
     this.components = components;
-
+    
     this.container.classList.add("node-editor-container");
     this.container.addEventListener("click", this.click.bind(this));
     this.container.style.cursor = "crosshair";
@@ -70,6 +70,10 @@ class View {
     this.nodes[id].destroy();
     delete this.nodes[id];
     return deletedNode;
+  }
+
+  getNode(id) {
+    return this.nodes[id];
   }
 
   addConnection(from, fromBranch, to, toBranch = 0) {

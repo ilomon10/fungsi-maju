@@ -1,3 +1,5 @@
+import "./css/View.css";
+
 import Component from "./Component";
 import Editor from "./Editor";
 import Engine from "./Engine";
