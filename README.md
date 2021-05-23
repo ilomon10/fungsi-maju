@@ -137,6 +137,24 @@ editor.on("process", () => {
 });
 ```
 
+## Interaction
+
+**Move canvas**\
+[Press + Hold] `Space` key then [Drag] `Right click` on canvas.\
+![Move Canvas](INTERACTION-MOVE_CANVAS.gif "Move canvas")
+
+**Move node**\
+[Drag] Mouse `Right click` on node.\
+![Move Node](INTERACTION-MOVE_NODE.gif "Move node")
+
+**Connect node socket**\
+`Right click` on node socket source, then `Right click` on target socket.\
+![Connect Node Socket](INTERACTION-CONNECT_SOCKET.gif "Connect Node Socket")
+
+**Remove connection**\
+[Hover]`Mouse` on connection wire, [Press] `Backspace` key. [Hold] `Shift` to select multiple connection.\
+![Remove connection](INTERACTION-REMOVE_CONNECTION.gif "Remove Connection")
+
 ## API
 
 ### Schema
