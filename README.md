@@ -202,6 +202,7 @@ export { Editor } from "fungsi-maju";
 | static generateId()       | -                                          | `string`        |
 | addNode(node)             | [`Node`](#node)                            | [`Node`](#node) |
 | removeNode(node)          | [`Node`](#node)                            | `boolean`       |
+| getNode(node)             | [`Node`](#node)                            | `boolean`       |
 | connect(from, branch, to) | [`Node`](#node), `number`, [`Node`](#node) | `boolean`       |
 | toJSON()                  | -                                          | `json`          |
 | fromJSON(json)            | `json`                                     | `json`          |
@@ -238,6 +239,11 @@ export { Node } from "fungsi-maju";
 - selected = `{NodeView}`
 - nodes = `{NodeView}`
 
+| method           | arguments          | return                  |
+| ---------------- | ------------------ | ----------------------- |
+| addNode(node)    | [`Node`](#node)    | [`NodeView`](#nodeview) |
+| getNode(id)      | [`Node.id`](#node) | [`NodeView`](#nodeview) |
+| removeNode(node) | [`Node`](#node)    | [`Node`](#node)         |
 
 ### NodeView
 
