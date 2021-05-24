@@ -1,5 +1,5 @@
  <div align="center">
-  <img src="EXAMPLE.png"/>
+  <img src="https://i.imgur.com/QKnFmTj.png"/>
   <h2>Fungsi Maju</h2>
   <blockquote>Library javascript untuk memproses fungsi berantai dengan format JSON</blockquote>
   <a href="https://www.npmjs.com/package/fungsi-maju"><img alt="Build Status" src="https://img.shields.io/npm/v/fungsi-maju" /></a> <a href="https://github.com/ilommon10/fungsi-maju/actions"><img alt="Build Status" src="https://github.com/ilomon10/fungsi-maju/workflows/Build/badge.svg?color=green" /></a> <a href="https://github.com/ilomon10/fungsi-maju/actions"> <img alt="Publish Status" src="https://github.com/ilomon10/fungsi-maju/workflows/Publish/badge.svg?color=green" /></a> <img src="https://img.shields.io/david/ilomon10/fungsi-maju.svg" /> <a href="https://david-dm.org/ilomon10/fungsi-maju?type=dev"><img src="https://img.shields.io/david/dev/ilomon10/fungsi-maju.svg" /></a>
@@ -141,19 +141,19 @@ editor.on("process", () => {
 
 **Move canvas**\
 [Press + Hold] `Space` key then [Drag] `Right click` on canvas.\
-![Move Canvas](INTERACTION-MOVE_CANVAS.gif "Move canvas")
+![Move Canvas](https://i.imgur.com/SrbZCoB.gif "Move canvas")
 
 **Move node**\
 [Drag] Mouse `Right click` on node.\
-![Move Node](INTERACTION-MOVE_NODE.gif "Move node")
+![Move Node](https://imgur.com/uiCaoll.gif "Move node")
 
 **Connect node socket**\
 `Right click` on node socket source, then `Right click` on target socket.\
-![Connect Node Socket](INTERACTION-CONNECT_SOCKET.gif "Connect Node Socket")
+![Connect Node Socket](https://i.imgur.com/8SIKrOS.gif "Connect Node Socket")
 
 **Remove connection**\
 [Hover]`Mouse` on connection wire, [Press] `Backspace` key. [Hold] `Shift` to select multiple connection.\
-![Remove connection](INTERACTION-REMOVE_CONNECTION.gif "Remove Connection")
+![Remove connection](https://imgur.com/kkf9Xs5.gif "Remove Connection")
 
 ## API
 
