@@ -4,11 +4,13 @@ import Recursion from './Recursion';
 
 const events = {
   process: [],
+  nodeselected: [],
   nodecreate: [],
   nodecreated: [],
   noderemove: [],
   noderemoved: [],
   nodetranslated: [],
+  connectionselected: [],
   connectioncreated: [],
   connectionremoved: [],
 };

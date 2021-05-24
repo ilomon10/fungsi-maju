@@ -67,6 +67,14 @@ class Connection {
 
     this.render();
     this.emitter.emit("connectioncreated", this);
+    this.emitter.on("connectionselected", (self) => {
+      if (self !== this) return;
+      const vm = this;
+      window.addEventListener("click", function listener(e) {
+        window.removeEventListener("click", listener);
+        vm.click(e);
+      });
+    })
   }
 
   getPoints() {
@@ -96,12 +104,12 @@ class Connection {
 
   click(e) {
     const classList = this._path.classList;
-
     window.removeEventListener("keyup", this.keyup);
     if (!classList.contains("active")) {
+      e.stopPropagation();
       window.addEventListener("keyup", this.keyup);
+      this.emitter.emit("connectionselected", this);
     }
-
     classList.toggle("active");
   }
 

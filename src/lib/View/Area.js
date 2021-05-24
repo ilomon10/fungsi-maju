@@ -45,6 +45,7 @@ class Area {
 
   onStart(e) {
     e.stopPropagation();
+    e.preventDefault();
     this._startPosition = { ...this.transform };
   }
 

@@ -9,10 +9,7 @@ class Metadata extends Map {
 }
 class Node {
   metadata = new Metadata();
-  position = {
-    x: 0,
-    y: 0
-  }
+  position = [0, 0];
   constructor(id, type, outputs = [], options = {}) {
     this.id = id;
     this.type = type;

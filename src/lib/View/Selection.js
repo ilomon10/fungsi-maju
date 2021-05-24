@@ -12,6 +12,7 @@ class Selection {
     )
 
     this._startPosition = null;
+    this._endPosition = null;
 
     this.element = document.createElement("div");
 
@@ -25,21 +26,55 @@ class Selection {
   }
 
   onStart(e) {
+    if (e.defaultPrevented) return false;
     this.view.container.dispatchEvent(new PointerEvent("mousemove", e));
     const { x, y } = this.view.area.mouse;
     this._startPosition = [x, y];
+    e.preventDefault();
   }
 
   onTranslate(dx, dy) {
+    if (this._startPosition === null) return false;
     let x1 = this._startPosition[0] + dx;
     let y1 = this._startPosition[1] + dy;
+    this._endPosition = [x1, y1];
     this.update(x1, y1);
   }
 
-  onStop(e) {
+  onStop(_e) {
+    if (this._startPosition === null || this._endPosition === null) return false;
+    let selection = [];
+    if (this._startPosition[0] >= this._endPosition[0]) {
+      selection = [
+        this._endPosition[0], this._endPosition[1],
+        this._startPosition[0], this._startPosition[1],
+      ];
+    } else {
+      selection = [
+        this._startPosition[0], this._startPosition[1],
+        this._endPosition[0], this._endPosition[1]
+      ];
+    }
+    const nodes = this.view.nodes;
+    for (const key of Object.keys(nodes)) {
+      const nodeView = nodes[key];
+      const node = nodes[key].node;
+      const el = nodeView.getElement();
+      const x = node.position[0];
+      const y = node.position[1];
+      const bounding = [x, y, x + el.clientWidth, y + el.clientHeight];
+      if (
+        selection[0] <= bounding[0]
+        && selection[1] <= bounding[1]
+        && selection[2] >= bounding[2]
+        && selection[3] >= bounding[3]
+      ) {
+        this.view.selectNode(nodeView, true);
+      }
+    }
     this._startPosition = null;
+    this._endPosition = null;
     this.update(0, 0);
-    console.log(this.view.nodes);
   }
 
   renderPath(x2, y2) {

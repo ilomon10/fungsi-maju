@@ -21,7 +21,7 @@
 
 .node-editor-container .connection .main-path {
   fill: none;
-  stroke-width: 3px;
+  stroke-width: 4px;
   stroke: blue;
 }
 .node-editor-container .connection .main-path.active {

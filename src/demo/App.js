@@ -55,6 +55,8 @@ class App extends Component {
     this.editor.on("connectioncreated", updateJSON);
     this.editor.on("connectionremoved", updateJSON);
     this.editor.on("nodetranslated", updateJSON);
+
+
     let i = 0;
     let togg = false;
     setInterval(() => {

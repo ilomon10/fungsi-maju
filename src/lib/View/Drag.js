@@ -65,10 +65,10 @@ class Drag {
     this.onTranslate(delta[0] / zoom, delta[1] / zoom, event);
   }
 
-  up() {
+  up(event) {
     if (!this.pointerStart) return;
     this.pointerStart = null;
-    this.onStop();
+    this.onStop(event);
   }
 }
 

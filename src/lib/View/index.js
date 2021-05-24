@@ -3,6 +3,7 @@ import Area from "./Area";
 import Connection from "./Connection";
 import NodeView from "./Node";
 import Picker from "./Picker";
+import Selection from "./Selection";
 
 class View {
   constructor(container, components, emitter) {
@@ -10,9 +11,9 @@ class View {
 
     this.container = container;
     this.components = components;
-    
+
     this.container.classList.add("node-editor-container");
-    this.container.addEventListener("click", this.click.bind(this));
+    this.container.addEventListener("pointerup", this.click.bind(this));
     this.container.style.cursor = "crosshair";
 
     this.keyup = this.keyup.bind(this);
@@ -26,6 +27,7 @@ class View {
 
     this.area = new Area(this.container);
     this.picker = new Picker(this);
+    this.selection = new Selection(this);
 
     this.emitter.on("nodecreated", (node) => {
       this.addNode(node);
@@ -60,6 +62,8 @@ class View {
       delete this.selected[node.id];
     else
       this.selected[node.id] = node;
+
+    this.emitter.emit("nodeselected", node);
 
     this.rerenderNode();
   }

@@ -41,7 +41,6 @@ class Element {
   }
 
   render(view, node) {
-
     if (!!view.selected[node.id]) this.element.classList.add("selected");
     else this.element.classList.remove("selected");
 
