@@ -179,10 +179,12 @@ editor.on("process", () => {
 ### Events 
 
 - `process`
+- `nodeselected`
 - `nodecreate`
 - `nodecreated`
 - `noderemove`
 - `noderemoved`
+- `connectionselected`
 - `connectioncreated`
 - `connectionremoved`
 
@@ -252,6 +254,7 @@ export { Node } from "fungsi-maju";
 - emitter = [`Editor`](#editor)
 - area = `Area`
 - picker = `Picker`
+- selection = `Selection`
 - container = `HTMLElement`
 - connection = `{Connection}`
 - selected = `{NodeView}`
