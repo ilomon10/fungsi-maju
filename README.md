@@ -32,13 +32,15 @@ let libraryInstance = new Engine("0.1.0");
 
 ### self-host/cdn
 
-```js
-<link href="build/index.css" rel="stylesheet">
-<script src="build/index.js"></script>
+```html
+<link href="https://unpkg.com/fungsi-maju@latest/build/index.css" rel="stylesheet">
+<script src="https://unpkg.com/fungsi-maju@latest/build/index.js"></script>
 
-let FungsiMaju = window.Engine.default;
-let libraryInstance = new FungsiMaju.Engine("0.1.0");
-...
+<script>
+  let FungsiMaju = window.Engine.default;
+  let libraryInstance = new FungsiMaju.Engine("0.1.0");
+  ...
+</script>
 ```
 
 ## Example
