@@ -14,7 +14,7 @@ class Switch extends Component {
   worker(node, input) {
     const inp = input;
     const value = input.value;
-    node.metadata.set(inp.from, inp.value);
+    node.setData(inp.from, inp.value);
     return [value < 5 ? value : undefined, value >= 5 ? value : undefined];
   }
 }

@@ -6,16 +6,19 @@
 https://badgen.net/bundlephobia/minzip/fungsi-maju" /></a> <a href="https://github.com/ilommon10/fungsi-maju/actions"><img alt="Build Status" src="https://github.com/ilomon10/fungsi-maju/workflows/Build/badge.svg?color=green" /></a> <a href="https://github.com/ilomon10/fungsi-maju/actions"> <img alt="Publish Status" src="https://github.com/ilomon10/fungsi-maju/workflows/Publish/badge.svg?color=green" /></a> <img src="https://img.shields.io/david/ilomon10/fungsi-maju.svg" /> <a href="https://david-dm.org/ilomon10/fungsi-maju?type=dev"><img src="https://img.shields.io/david/dev/ilomon10/fungsi-maju.svg" /></a>
 
 </div>
+
 ## ⭐️ Feature
 
-- [x] Engine untuk proses fungsi
-- [x] Validator skema json
-- [x] Editor visual
+- Engine untuk proses fungsi
+- Validator skema json
+- Editor visual
+- Server-side processing
+- Custom component
 
 ## 📦 Getting Started
 
 > NOTE: LIBRARY INI MASIH BERSIFAT EKPERIMEN
-
+****
 ```bash
 $ npm install fungsi-maju
 ```
@@ -238,13 +241,16 @@ export { Node } from "fungsi-maju";
 
 **properties**
 - id = `string`
-- metadata = `Map`
+- metadata = `object`
 - position = `object`
 - type = `string`
 - outputs = `[ [Node.id] ]`
 
 | method                   | arguments                     | return          |
 | ------------------------ | ----------------------------- | --------------- |
+| getData(key)             | `any`                         | `any`           |
+| setData(key, value)      | `any`, `value`                | `metadata`      |
+| removeData(key)          | `any`                         | `metadata`      |
 | addOutput(branch, id)    | `number`, [`Node.id`](#node)  | [`Node`](#node) |
 | removeOutput(id, branch) | [`Node.id`](#node), `number?` | [`Node`](#node) |
 | toJSON()                 | -                             | `json`          |

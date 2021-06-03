@@ -1,29 +1,27 @@
-class Metadata extends Map {
-  toJSON() {
-    const ret = {};
-    this.forEach(function (value, key) {
-      ret[key] = value;
-    });
-    return ret;
-  }
-}
 class Node {
-  metadata = new Metadata();
+  metadata = {};
   position = [0, 0];
   constructor(id, type, outputs = [], options = {}) {
     this.id = id;
     this.type = type;
     this.outputs = outputs;
-    this.position = options.position;
 
-    if (options.metadata) {
-      const md = Object.keys(options.metadata);
-      if (md.length > 0) {
-        for (const key of md) {
-          this.metadata.set(key, options.metadata[key]);
-        }
-      }
-    }
+    if (options.position) this.position = options.position;
+    if (options.metadata) this.metadata = options.metadata;
+  }
+
+  setData(key, value) {
+    this.metadata[key] = value;
+    return this.metadata;
+  }
+
+  getData(key) {
+    return this.metadata[key];
+  }
+
+  removeData(key) {
+    delete this.metadata[key];
+    return this.metadata;
   }
 
   addOutput(branch, id) {
@@ -55,7 +53,7 @@ class Node {
     let data = {
       id: this.id,
       type: this.type,
-      metadata: this.metadata.toJSON(),
+      metadata: this.metadata,
       outputs: [...this.outputs.map(output => [...output])]
     };
 

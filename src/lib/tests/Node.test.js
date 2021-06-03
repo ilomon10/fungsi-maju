@@ -18,17 +18,23 @@ describe("Node", () => {
   })
 
   it("set metadata", () => {
-    node.metadata.set("key", "value");
-    const json = node.metadata.toJSON();
+    const json = node.setData("key", "value");;
     expect(json).toEqual({ "key": "value" });
-    expect(node.metadata.get("key")).toEqual("value");
+    expect(node.metadata).toEqual({ "key": "value" });
+    expect(node.metadata["key"]).toEqual("value");
+    expect(node.getData("key")).toEqual("value");
+  })
+
+  it("get metadata", () => {
+    expect(node.getData("key")).toEqual("value");
+    expect(node.metadata["key"]).toEqual("value");
   })
 
   it("remove metadata", () => {
-    node.metadata.delete("key");
-    const json = node.metadata.toJSON();
+    const json = node.removeData("key");
     expect(json).toEqual({});
-    expect(node.metadata.get("key")).toEqual(undefined);
+    expect(node.metadata).toEqual({});
+    expect(node.getData("key")).toEqual(undefined);
   })
 
   it("export to json", () => {
