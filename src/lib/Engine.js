@@ -13,6 +13,7 @@ const events = {
   connectionselected: [],
   connectioncreated: [],
   connectionremoved: [],
+  contextmenu: [],
 };
 
 class Engine extends Emitter {

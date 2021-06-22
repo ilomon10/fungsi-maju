@@ -20,6 +20,8 @@ class Node {
 
     this.element = new Element(this, this.component.name);
 
+    this.container.addEventListener("contextmenu", e => this.view.emitter.emit("contextmenu", { e, node: this }));
+
     this._drag = new Drag(
       this.container,
       this.onTranslate.bind(this),

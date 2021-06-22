@@ -14,6 +14,7 @@ class View {
 
     this.container.classList.add("node-editor-container");
     this.container.addEventListener("pointerup", this.click.bind(this));
+    this.container.addEventListener("contextmenu", e => this.emitter.emit("contextmenu", { e, view: this }));
     this.container.style.cursor = "crosshair";
 
     this.keyup = this.keyup.bind(this);

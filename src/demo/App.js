@@ -55,6 +55,11 @@ class App extends Component {
     this.editor.on("connectioncreated", updateJSON);
     this.editor.on("connectionremoved", updateJSON);
     this.editor.on("nodetranslated", updateJSON);
+    this.editor.on("contextmenu", ({ e, node }) => {
+      e.preventDefault();
+      e.stopPropagation();
+      console.log(e, node);
+    })
 
 
     let i = 0;

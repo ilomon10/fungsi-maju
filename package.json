@@ -3,6 +3,7 @@
   "version": "0.1.8",
   "description": "Library javascript untuk memproses fungsi berantai yang modular dengan format JSON",
   "main": "build/index.js",
+  "types": "types",
   "scripts": {
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
