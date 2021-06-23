@@ -13,7 +13,7 @@ class View {
     this.components = components;
     
     this.container.setAttribute("tabIndex", 0);
-    
+
     this.container.classList.add("node-editor-container");
     this.container.addEventListener("pointerup", this.click.bind(this));
     this.container.addEventListener("contextmenu", e => this.emitter.emit("contextmenu", { e, view: this }));
@@ -143,7 +143,6 @@ class View {
   }
 
   keyup(event) {
-    console.log("event");
     if (event.code === "Backspace" || event.code === "Delete") {
       Object.keys(this.selected).forEach((key) => {
         const node = this.selected[key];
