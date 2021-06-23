@@ -145,15 +145,15 @@ editor.on("process", () => {
 ## Interaction
 
 **Move canvas**\
-[Press + Hold] `Space` key then [Drag] `Right click` on canvas.\
+[Press + Hold] `Space` key then [Drag] `Click` on canvas.\
 ![Move Canvas](https://i.imgur.com/SrbZCoB.gif "Move canvas")
 
 **Move node**\
-[Drag] Mouse `Right click` on node.\
+[Drag] Mouse `Click` on node.\
 ![Move Node](https://imgur.com/uiCaoll.gif "Move node")
 
 **Connect node socket**\
-`Right click` on node socket source, then `Right click` on target socket.\
+`Click` on node socket source, then `Click` on target socket.\
 ![Connect Node Socket](https://i.imgur.com/8SIKrOS.gif "Connect Node Socket")
 
 **Remove connection**\
