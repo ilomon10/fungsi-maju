@@ -64,14 +64,14 @@ class App extends Component {
 
     let i = 0;
     let togg = false;
-    setInterval(() => {
-      if (togg)
-        this.editor.process(i, nodeI.id);
-      else
-        this.editor.process(i, nodeI2.id);
-      togg = !togg;
-      i++;
-    }, 2000);
+    // setInterval(() => {
+    //   if (togg)
+    //     this.editor.process(i, nodeI.id);
+    //   else
+    //     this.editor.process(i, nodeI2.id);
+    //   togg = !togg;
+    //   i++;
+    // }, 2000);
 
     updateJSON();
   }

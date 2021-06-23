@@ -11,7 +11,9 @@ class View {
 
     this.container = container;
     this.components = components;
-
+    
+    this.container.setAttribute("tabIndex", 0);
+    
     this.container.classList.add("node-editor-container");
     this.container.addEventListener("pointerup", this.click.bind(this));
     this.container.addEventListener("contextmenu", e => this.emitter.emit("contextmenu", { e, view: this }));
@@ -19,8 +21,8 @@ class View {
 
     this.keyup = this.keyup.bind(this);
 
-    window.removeEventListener("keyup", this.keyup);
-    window.addEventListener("keyup", this.keyup);
+    this.container.removeEventListener("keyup", this.keyup);
+    this.container.addEventListener("keyup", this.keyup);
 
     this.connection = {};
     this.selected = {};
@@ -141,6 +143,7 @@ class View {
   }
 
   keyup(event) {
+    console.log("event");
     if (event.code === "Backspace" || event.code === "Delete") {
       Object.keys(this.selected).forEach((key) => {
         const node = this.selected[key];
