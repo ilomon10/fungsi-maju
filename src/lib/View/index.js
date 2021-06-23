@@ -24,12 +24,7 @@ class View {
     this.container.removeEventListener("keyup", this.keyup);
     this.container.addEventListener("keyup", this.keyup);
 
-    this.container.addEventListener("focusin", () => {
-      console.log("focusin");
-    });
-
     this.container.addEventListener("focusout", () => {
-      console.log("focusout");
       this.selected = {};
       this.rerenderNode();
     });
