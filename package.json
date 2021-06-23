@@ -3,7 +3,7 @@
   "version": "0.1.11",
   "description": "Library javascript untuk memproses fungsi berantai yang modular dengan format JSON",
   "main": "build/index.js",
-  "types": "src/types",
+  "types": "build/index.d.js",
   "scripts": {
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
@@ -47,6 +47,7 @@
     "bfj": "^7.0.2",
     "camelcase": "^6.1.0",
     "case-sensitive-paths-webpack-plugin": "2.3.0",
+    "copy-webpack-plugin": "^5.1.2",
     "css-loader": "5.0.2",
     "dotenv": "8.2.0",
     "dotenv-expand": "5.1.0",

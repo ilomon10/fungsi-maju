@@ -58,6 +58,7 @@ module.exports = {
   appPackageJson: resolveApp('package.json'),
   appSrc: resolveApp('src'),
   appSrcLib: resolveApp('src/lib'),
+  appSrcLibTypes: resolveApp('src/lib/@types'),
   appSrcDemo: resolveApp('src/demo'),
   appTsConfig: resolveApp('tsconfig.json'),
   appJsConfig: resolveApp('jsconfig.json'),
