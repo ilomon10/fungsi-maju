@@ -43,11 +43,31 @@ class Selection {
 
   onStop(_e) {
     if (this._startPosition === null || this._endPosition === null) return false;
+
     let selection = [];
-    if (this._startPosition[0] >= this._endPosition[0]) {
+    const direction = [
+      this._startPosition[0] >= this._endPosition[0],
+      this._startPosition[1] >= this._endPosition[1]
+    ]
+
+    if (direction[0] && direction[1]) {
       selection = [
         this._endPosition[0], this._endPosition[1],
         this._startPosition[0], this._startPosition[1],
+      ];
+    } else if (direction[0] && !direction[1]) {
+      selection = [
+        this._endPosition[0],
+        this._startPosition[1],
+        this._endPosition[1],
+        this._startPosition[0],
+      ];
+    } else if (!direction[0] && direction[1]) {
+      selection = [
+        this._startPosition[0],
+        this._endPosition[1],
+        this._startPosition[1],
+        this._endPosition[0],
       ];
     } else {
       selection = [
@@ -55,6 +75,7 @@ class Selection {
         this._endPosition[0], this._endPosition[1]
       ];
     }
+
     const nodes = this.view.nodes;
     for (const key of Object.keys(nodes)) {
       const nodeView = nodes[key];

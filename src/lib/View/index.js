@@ -11,7 +11,7 @@ class View {
 
     this.container = container;
     this.components = components;
-    
+
     this.container.setAttribute("tabIndex", 0);
 
     this.container.classList.add("node-editor-container");
@@ -23,6 +23,16 @@ class View {
 
     this.container.removeEventListener("keyup", this.keyup);
     this.container.addEventListener("keyup", this.keyup);
+
+    this.container.addEventListener("focusin", () => {
+      console.log("focusin");
+    });
+
+    this.container.addEventListener("focusout", () => {
+      console.log("focusout");
+      this.selected = {};
+      this.rerenderNode();
+    });
 
     this.connection = {};
     this.selected = {};
@@ -63,8 +73,10 @@ class View {
 
     if (this.selected[node.id])
       delete this.selected[node.id];
-    else
+    else {
       this.selected[node.id] = node;
+      this.container.focus();
+    }
 
     this.emitter.emit("nodeselected", node);
 
