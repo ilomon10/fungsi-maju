@@ -38,12 +38,20 @@ describe("Node", () => {
   })
 
   it("export to json", () => {
-    const json = node.toJSON();
+    let json = node.toJSON();
+    let jsonComplete = node.toJSON(true);
     expect(json).toEqual({
       "id": 1,
       "metadata": {},
       "outputs": [],
       "type": "test"
+    });
+    expect(jsonComplete).toEqual({
+      "id": 1,
+      "metadata": {},
+      "outputs": [],
+      "type": "test",
+      "position": [0, 0]
     });
   })
 

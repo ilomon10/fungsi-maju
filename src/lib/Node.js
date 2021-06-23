@@ -57,7 +57,7 @@ class Node {
       outputs: [...this.outputs.map(output => [...output])]
     };
 
-    if (complete) data.position = { ...this.position };
+    if (complete) data.position = [...this.position];
 
     return data;
   }
