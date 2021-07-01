@@ -1,4 +1,5 @@
 import './css/App.css';
+import ReactDOM from "react-dom";
 import { Editor, Node } from './../lib';
 import Inject from './Inject';
 import Switch from './Switch';
@@ -20,15 +21,39 @@ class App extends Component {
     this.container.current.style.height = "350px";
 
     this.editor = new Editor("0.1.0", this.container.current);
-    this.editor.register(new Inject());
-    this.editor.register(new Switch());
-    this.editor.register(new Debug());
 
-    const nodeI = new Node(Editor.generateId(), "Inject");
-    const nodeI2 = new Node(Editor.generateId(), "Inject");
-    const nodeS = new Node(Editor.generateId(), "Switch");
-    const nodeD = new Node(Editor.generateId(), "Debug");
-    const nodeD2 = new Node(Editor.generateId(), "Debug");
+    this.editor.on("rendernode", ({ el, node, nodeview, component, bindSocket }) => {
+      const Component = component.component;
+      node.update = () => new Promise((res) => {
+        ReactDOM.render(<Component
+          node={node}
+          nodeview={nodeview}
+          component={component}
+          editor={this.editor}
+          bindSocket={bindSocket}
+        />, el, res);
+      })
+      node._reactComponent = true;
+      node.update();
+    })
+
+    this.editor.on("connectioncreated", (connection) => {
+      console.log("connectioncreated", connection);
+    })
+
+    const injectComp = new Inject();
+    const switchComp = new Switch();
+    const debugComp = new Debug();
+
+    this.editor.register(injectComp);
+    this.editor.register(switchComp);
+    this.editor.register(debugComp);
+
+    const nodeI = injectComp.createNode();
+    const nodeI2 = injectComp.createNode();
+    const nodeS = switchComp.createNode();
+    const nodeD = debugComp.createNode();
+    const nodeD2 = debugComp.createNode();
 
     nodeI.position = [10, 0];
     nodeI2.position = [100, 0];
@@ -46,6 +71,10 @@ class App extends Component {
     this.editor.connect(nodeI2, 0, nodeS);
     this.editor.connect(nodeS, 0, nodeD);
     this.editor.connect(nodeS, 1, nodeD2);
+
+    setTimeout(() => {
+      this.editor.connect(nodeI, 0, nodeS);
+    }, 1000);
 
     const updateJSON = () => {
       this.setState({ json: this.editor.toJSON(true) });

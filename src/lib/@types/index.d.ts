@@ -11,7 +11,7 @@ declare module "fungsi-maju" {
     engine: Engine;
     constructor(name: string);
 
-    builder(node: Node | NodeView): void;
+    builder(node: Node): void;
     worker(node: Node | NodeView, input: any): any;
 
     [customMethod: string]: any;

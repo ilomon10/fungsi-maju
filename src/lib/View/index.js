@@ -55,9 +55,9 @@ class View {
     this.nodes[node.id] = nodeView;
     this.area.appendChild(nodeView.container);
 
-    component.builder(nodeView);
+    component.builder(node);
 
-    return nodeView;
+    return node;
   }
 
   selectNode(node, accumulate) {
@@ -82,7 +82,7 @@ class View {
     const id = node.id;
     const deletedNode = this.nodes[id].node;
     this.nodes[id].destroy();
-    delete this.nodes[id];
+    delete this.nodes[id];  
     return deletedNode;
   }
 
@@ -91,12 +91,13 @@ class View {
   }
 
   addConnection(from, fromBranch, to, toBranch = 0) {
-    const fromNode = this.nodes[from.id];
-    const toNode = this.nodes[to.id];
+    const fromNode = this.getNode(from.id);
+    const toNode = this.getNode(to.id);
+
     const fromSocket = fromNode.getSocket("output", fromBranch);
     const toSocket = toNode.getSocket("input", toBranch);
 
-    this.connect(fromSocket, toSocket);
+    return this.connect(fromSocket, toSocket);
   }
 
   removeConnection(connection) {
@@ -114,7 +115,9 @@ class View {
     const to = toSocket.nodeView;
     const id = `${from.id}_${fromSocket.branch}-${to.id}_${toSocket.branch}`;
     from.node.addOutput(fromSocket.branch, to.id);
-    this.connection[id] = new Connection(this, fromSocket, toSocket, this.emitter);
+    const connection = new Connection(this, fromSocket, toSocket, this.emitter);
+    this.connection[id] = connection;
+    return connection;
   }
 
   getSockets() {

@@ -1,6 +1,8 @@
 class Node {
   metadata = {};
   position = [0, 0];
+  hasInput = false;
+
   constructor(id, type, outputs = [], options = {}) {
     this.id = id;
     this.type = type;
@@ -24,7 +26,7 @@ class Node {
     return this.metadata;
   }
 
-  addOutput(branch, id) {
+  addOutput(branch, id = null) {
 
     if (!this.outputs[branch])
       this.outputs[branch] = [];
@@ -48,6 +50,8 @@ class Node {
 
     return this;
   }
+
+  update() { }
 
   toJSON(complete = false) {
     let data = {

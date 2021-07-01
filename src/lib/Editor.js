@@ -64,7 +64,13 @@ class Editor extends Engine {
 
     fromNode.addOutput(branch, toNode.id);
 
-    if (this.view) this.view.addConnection(fromNode, branch, toNode);
+    try {
+      this.view.addConnection(fromNode, branch, toNode);
+    } catch (err) {
+      console.error(err);
+      this.emit("warn", err);
+    }
+
 
     return this;
   }

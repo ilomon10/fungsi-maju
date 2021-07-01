@@ -4,6 +4,7 @@ import Recursion from './Recursion';
 
 const events = {
   process: [],
+  rendernode: [],
   nodeselected: [],
   nodecreate: [],
   nodecreated: [],

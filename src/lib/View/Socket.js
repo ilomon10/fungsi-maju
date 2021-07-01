@@ -11,6 +11,12 @@ class Socket {
     this.element.addEventListener("pointerdown", this.pointerdown.bind(this));
 
     this._pick = false;
+
+    this.nodeView.view.emitter.emit("rendersocket", {
+      el: element,
+      nodeview: nodeView,
+      socket: this
+    })
   }
 
   action(socket) {

@@ -18,8 +18,6 @@ class Node {
 
     this.container.className = "node-wrapper";
 
-    this.element = new Element(this, this.component.name);
-
     this.container.addEventListener("contextmenu", e => this.view.emitter.emit("contextmenu", { e, node: this }));
 
     this._drag = new Drag(
@@ -27,6 +25,14 @@ class Node {
       this.onTranslate.bind(this),
       this.onStart.bind(this),
     );
+
+    this.view.emitter.emit("rendernode", {
+      el: this.container,
+      node,
+      nodeview: this,
+      component,
+      bindSocket: this.bindSocket.bind(this)
+    })
 
     this.update();
     this.render();
@@ -37,7 +43,11 @@ class Node {
   }
 
   getElement() {
-    return this.element.element;
+    return this.container;
+  }
+
+  bindSocket(element, type, key) {
+    this.sockets[`${type}-${key}`] = new Socket(element, key, type, this);
   }
 
   addSocket(type, key, name) {
@@ -93,10 +103,7 @@ class Node {
     this.view.updateConnection();
   }
 
-  render() {
-    const el = this.element.render(this.view, this.node);
-    this.container.appendChild(el);
-  }
+  render() { }
 
   toJSON() {
     return this.node.toJSON(true);
