@@ -16,16 +16,24 @@ class Connection {
   }
 
   static updateConnection(element, data, path = null) {
-    if (!path) path = element.querySelector(".connection path.main-path");
+    if (!path) path = element.querySelector(".connection .main-path");
 
     if (!path) throw new Error("Path of connection was broken");
 
-    path.setAttribute("d", data);
+    const paths = path.querySelectorAll("path");
+
+    paths.forEach((p)=> {
+      p.setAttribute("d", data);
+    })
+
   }
 
   static renderConnection(element, data, connection) {
     const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    const path = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+    const path_l = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    const path_ol = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    const path_bg = document.createElementNS('http://www.w3.org/2000/svg', 'path');
 
     const classes = !connection ? [] : [
       `input-${connection.inputId}`,
@@ -35,11 +43,19 @@ class Connection {
     if (classes.length > 0) svg.classList.add("connection", ...classes);
     else svg.classList.add("connection");
     path.classList.add("main-path");
+    path_l.classList.add("main-path-l");
+    path_ol.classList.add("main-path-ol");
+    path_bg.classList.add("main-path-bg");
 
-    path.style.pointerEvents = "all";
+    path_bg.style.pointerEvents = "all";
 
-    path.setAttribute("d", data);
+    path_l.setAttribute("d", data);
+    path_ol.setAttribute("d", data);
+    path_bg.setAttribute("d", data);
 
+    path.appendChild(path_bg);
+    path.appendChild(path_ol);
+    path.appendChild(path_l);
     svg.appendChild(path);
     element.appendChild(svg);
     return path;

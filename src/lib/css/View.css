@@ -19,12 +19,23 @@
   z-index: -1;
 }
 
-.node-editor-container .connection .main-path {
+.node-editor-container .connection .main-path-l {
   fill: none;
-  stroke-width: 4px;
+  stroke-width: 1px;
   stroke: blue;
 }
-.node-editor-container .connection .main-path.active {
+.node-editor-container .connection .main-path-ol {
+  fill: none;
+  stroke-width: 2px;
+  stroke: white;
+}
+.node-editor-container .connection .main-path-bg {
+  fill: none;
+  opacity: 0;
+  stroke-width: 20px;
+  stroke: white;
+}
+.node-editor-container .connection .main-path.active .main-path-l {
   stroke: red;
 }
 
