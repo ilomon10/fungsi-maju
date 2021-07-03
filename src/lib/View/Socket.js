@@ -50,8 +50,10 @@ class Socket {
 
   removeConnection(connection = null) {
     if (connection === null) {
-      return this.connection.map(conn => {
-        this.removeConnection(conn).destroy();
+      const connection = [...this.connection];
+      return connection.map(conn => {
+        this.removeConnection(conn);
+        conn.destroy();
         return conn;
       });
     } else {
