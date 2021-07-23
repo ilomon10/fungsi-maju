@@ -30,9 +30,9 @@ declare module "fungsi-maju" {
 
     constructor(id: string, outputs: [], options?: { position: [], metadata: any });
 
-    setData<T extends this["metadata"]>(key: keyof T, value: Metadata[any]): this["metadata"];
-    getData<T extends this["metadata"]>(key: keyof T): this["metadata"];
-    removeData(key: keyof this["metadata"]): this["metadata"];
+    setData(key: string, value: any): any;
+    getData(key: string): any;
+    removeData(key: string): any;
 
     addOutput(branch: string, id: string): this;
     removeOutput(id: string, branch?: string): this;
