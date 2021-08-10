@@ -25,7 +25,7 @@ declare module "fungsi-maju" {
     id: string;
     type: string;
     metadata: Metadata;
-    position: [x: number, y: number];
+    position: [number, number];
     outputs: [[]];
 
     constructor(id: string, outputs: [], options?: { position: [], metadata: any });
